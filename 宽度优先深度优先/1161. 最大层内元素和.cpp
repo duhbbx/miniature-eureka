@@ -1,10 +1,10 @@
 
-#include <iostream>				// ÊäÈëÊä³ö
-#include <vector>				// ¿É±ä³¤¶ÈÊı×é
+#include <iostream>				// è¾“å…¥è¾“å‡º
+#include <vector>				// å¯å˜é•¿åº¦æ•°ç»„
 #include <unordered_map>		// hashmap
-#include <stack>				// Õ»
-#include <string>				// ×Ö·û´®
-#include <queue>                // ¶ÓÁĞ
+#include <stack>				// æ ˆ
+#include <string>				// å­—ç¬¦ä¸²
+#include <queue>                // é˜Ÿåˆ—
 
 using namespace std;
 
@@ -31,15 +31,14 @@ struct TreeNode {
 
 
 ////////////////////////////////////////////////////////////////////////////////
-/// ÕâÀï·ÅOJµÄÀà
+/// è¿™é‡Œæ”¾OJçš„ç±»
 
 
 class Solution {
 public:
     int maxLevelSum(TreeNode* root) {
 
-        
-        if (root == nullptr) {  // Èç¹ûÊ÷Îª¿ÕµÄ»°Ö±½Ó·µ»Ø 0
+        if (root == nullptr) {  // å¦‚æœæ ‘ä¸ºç©ºçš„è¯ç›´æ¥è¿”å› 0
             return 0;
         }
 
@@ -50,43 +49,44 @@ public:
         vector<int> level = { 1,0 };
         int curr_level = 0;
 
-        int sum = root->val;
+
+        int sum = root->val;    // ç»™ç¬¬ä¸€å±‚èµ‹å€¼
         int sum_level = 0;
 
-        int loop_sum = 0;
+        int loop_sum = 0;       // å¾ªç¯ä¸­è¿›è¡Œæ±‚å’Œçš„ä¸´æ—¶å˜é‡
 
         while (!q.empty()) {
 
-            level[curr_level] -= 1; // Ã¿´Îµ¯³ö¶¼´ÓÕâÀï¼õÈ¥Ò»¸öÔªËØÊıÁ¿
+            level[curr_level] -= 1; // æ¯æ¬¡å¼¹å‡ºéƒ½ä»è¿™é‡Œå‡å»ä¸€ä¸ªå…ƒç´ æ•°é‡
             TreeNode* node = q.front();
             q.pop();
 
-            loop_sum += node->val;  // ÇóºÍ
+            loop_sum += node->val;  // æ±‚å’Œ
 
-            if (node->left) {       // ×ó×Ó½ÚµãÈëÕ»
+            if (node->left) {       // å·¦å­èŠ‚ç‚¹å…¥æ ˆ
                 q.push(node->left);
                 level[curr_level + 1]++;
             }
 
-            if (node->right) {      // ÓÒ×Ó½ÚµãÈëÕ»
+            if (node->right) {      // å³å­èŠ‚ç‚¹å…¥æ ˆ
                 q.push(node->right);
                 level[curr_level + 1]++;
             }
 
-            if (level[curr_level] == 0) {   // µ½ÁË»»²ãµÄÊ±ºòÁË
+            if (level[curr_level] == 0) {   // åˆ°äº†æ¢å±‚çš„æ—¶å€™äº†
 
                 if (loop_sum > sum) {
                     sum = loop_sum;
                     sum_level = curr_level;
-                    loop_sum = 0;   // ÕâÀïÍü¼ÇÁËÒªÇåÁãÁË
                 }
 
                 curr_level++;
                 level.push_back(0);
+                loop_sum = 0;   // è¿™é‡Œå¿˜è®°äº†è¦æ¸…é›¶äº†, ä¹‹å‰æŠŠè¿™ä¸ªæ”¾åœ¨äº†ä¸Šä¸€ä¸ªifä¸­555
             }
         }
 
-        return sum_level + 1;   // ÌâÄ¿ÖĞµÄ²ãÊÇ´Ó 1 ¿ªÊ¼µÄ
+        return sum_level + 1;   // é¢˜ç›®ä¸­çš„å±‚æ˜¯ä» 1 å¼€å§‹çš„
     }
 };
 
@@ -101,7 +101,7 @@ public:
 
 
 /// <summary>
-/// Êä³öÈİÆ÷ÖĞµÄÄÚÈİ
+/// è¾“å‡ºå®¹å™¨ä¸­çš„å†…å®¹
 /// </summary>
 /// <typeparam name="T"></typeparam>
 /// <param name="t"></param>
