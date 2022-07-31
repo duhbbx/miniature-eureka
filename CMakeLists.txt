@@ -3,4 +3,5 @@ project(leetcode)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(leetcode "单调栈/503. 下一个更大元素 II.cpp")
+
+add_executable(leetcode "单调栈/1124. 表现良好的最长时间段.cpp")
