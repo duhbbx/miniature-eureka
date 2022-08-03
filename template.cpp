@@ -1,9 +1,9 @@
 
-#include <iostream>				// ÊäÈëÊä³ö
-#include <vector>				// ¿É±ä³¤¶ÈÊı×é
+#include <iostream>				// è¾“å…¥è¾“å‡º
+#include <vector>				// å¯å˜é•¿åº¦æ•°ç»„
 #include <unordered_map>		// hashmap
-#include <stack>				// Õ»
-#include <string>				// ×Ö·û´®
+#include <stack>				// æ ˆ
+#include <string>				// å­—ç¬¦ä¸²
 
 using namespace std;
 
@@ -11,12 +11,13 @@ using namespace std;
 
 
 ////////////////////////////////////////////////////////////////////////////////
-/// ÕâÀï·ÅOJµÄÀà
+/// è¿™é‡Œæ”¾OJçš„ç±»
 
 
 
 
 ////////////////////////////////////////////////////////////////////////////////
+
 
 
 
@@ -25,7 +26,7 @@ using namespace std;
 
 
 /// <summary>
-/// Êä³öÈİÆ÷ÖĞµÄÄÚÈİ
+/// è¾“å‡ºå®¹å™¨ä¸­çš„å†…å®¹
 /// </summary>
 /// <typeparam name="T"></typeparam>
 /// <param name="t"></param>

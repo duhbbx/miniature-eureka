@@ -9,30 +9,30 @@ class Solution {
 public:
     vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
 
-        stack<int> monotonous_stack;      // µ¥µ÷µİ¼õµÄÕ»
-        unordered_map<int, int> hashmap;  // ´æ·ÅÁÙÊ±½á¹û
-        vector<int> vec(nums1.size(), 0); // ´æ·Å×îºó·µ»ØµÄ½á¹û
+        stack<int> monotonous_stack;      // å•è°ƒé€’å‡çš„æ ˆ
+        unordered_map<int, int> hashmap;  // å­˜æ”¾ä¸´æ—¶ç»“æœ
+        vector<int> vec(nums1.size(), 0); // å­˜æ”¾æœ€åè¿”å›çš„ç»“æœ
 
-        // Î¬»¤Ò»¸öµ¥µ÷µİ¼õµÄÕ»
+        // ç»´æŠ¤ä¸€ä¸ªå•è°ƒé€’å‡çš„æ ˆ
         for (int value : nums2) {
 
-            // ´ÓÕ»Î²½«Ğ¡ÓÚ value µÄÖµ¶¼µ¯³öÈ¥£¬²¢ÇÒÕâĞ©Ì¸³öÈ¥µÄÖµµÄÏÂÒ»¸ö×î´óµÄÖµÎª value
+            // ä»æ ˆå°¾å°†å°äº value çš„å€¼éƒ½å¼¹å‡ºå»ï¼Œå¹¶ä¸”è¿™äº›è°ˆå‡ºå»çš„å€¼çš„ä¸‹ä¸€ä¸ªæœ€å¤§çš„å€¼ä¸º value
             while (!monotonous_stack.empty() && value > monotonous_stack.top()) {
                 hashmap[monotonous_stack.top()] = value;
                 monotonous_stack.pop();
             }
 
-            // Èç¹û½«Ğ¡ÓÚ value µÄÖµ¶¼µ¯³öÈ¥ÁË»òÕßÕ»Îª¿ÕÁË£¬Ôò¿ÉÒÔ½« value ÈëÕ»
+            // å¦‚æœå°†å°äº value çš„å€¼éƒ½å¼¹å‡ºå»äº†æˆ–è€…æ ˆä¸ºç©ºäº†ï¼Œåˆ™å¯ä»¥å°† value å…¥æ ˆ
             monotonous_stack.push(value);
         }
 
-        // Õ»ÀïÃæµÄ¶¼ÊÇºóÃæÃ»ÓĞ¸ü´óÖµµÄÔªËØ
+        // æ ˆé‡Œé¢çš„éƒ½æ˜¯åé¢æ²¡æœ‰æ›´å¤§å€¼çš„å…ƒç´ 
         while (!monotonous_stack.empty()) {
             hashmap[monotonous_stack.top()] = -1;
             monotonous_stack.pop();
         }
 
-        // unordered_map ×ªÎª vector ·µ»Ø½á¹û
+        // unordered_map è½¬ä¸º vector è¿”å›ç»“æœ
         for (int i = 0; i < nums1.size(); i++) {
             vec[i] = hashmap.at(nums1[i]);
         }

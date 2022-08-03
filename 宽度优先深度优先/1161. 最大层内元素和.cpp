@@ -5,8 +5,10 @@
 #include <stack>                // 栈
 #include <string>               // 字符串
 #include <queue>                // 队列
-
+#include <cstdlib>
 using namespace std;
+
+
 
 
 struct TreeNode {
@@ -141,8 +143,16 @@ void print(T t) {
 
 int main() {
 
+#ifdef _WIN32
+    system("CHCP 65001");
+#endif // _WIN32
 
-    print<vector<int>>({1, 2, 3, 4});
+ 
+
+    print<vector<int>>({1, 2, 3, 4, 5});
+
+
+    cout << "结束啦....." << endl;
 
 
     return 0;
