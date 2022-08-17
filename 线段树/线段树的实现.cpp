@@ -5,6 +5,9 @@
 #include <cmath>
 #include <cstring>
 
+#define or ||
+#define and &&
+
 using namespace std;
 
 namespace SegTree {
