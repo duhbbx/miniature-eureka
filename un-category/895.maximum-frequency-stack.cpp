@@ -1,16 +1,16 @@
 
-#include <iostream>				// è¾“å…¥è¾“å‡º
-#include <vector>				// å¯å˜é•¿åº¦æ•°ç»„
+#include <iostream>				// ÊäÈëÊä³ö
+#include <vector>				// ¿É±ä³¤¶ÈÊı×é
 #include <unordered_map>		// hashmap
-#include <stack>				// æ ˆ
-#include <string>				// å­—ç¬¦ä¸²
+#include <stack>				// Õ»
+#include <string>				// ×Ö·û´®
 
 using namespace std;
 
 
 
 /// <summary>
-/// è¾“å‡ºå®¹å™¨ä¸­çš„å†…å®¹
+/// Êä³öÈİÆ÷ÖĞµÄÄÚÈİ
 /// </summary>
 /// <typeparam name="T"></typeparam>
 /// <param name="t"></param>
@@ -29,10 +29,23 @@ void print(T t) {
 
 
 ////////////////////////////////////////////////////////////////////////////////
-/// è¿™é‡Œæ”¾OJçš„ç±»
+/// ÕâÀï·ÅOJµÄÀà
 
 
+class FreqStack {
+public:
+    FreqStack() {
 
+    }
+
+    void push(int val) {
+
+    }
+
+    int pop() {
+
+    }
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 
