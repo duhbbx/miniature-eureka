@@ -5,6 +5,7 @@
 #include <stack>				// 栈
 #include <string>				// 字符串
 #include <queue>                // 队列
+#include <climits>
 
 using namespace std;
 
