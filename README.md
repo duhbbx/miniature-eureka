@@ -1,10 +1,25 @@
 # miniature-eureka
 
 
-## CLion cmake Error: could not load cache
 
-If you are using the CLion, you can use File | Reload CMake Project.
 
-I meet this problem after using git force pull, and Reload CMake Project solves it.
+嘿嘿，记录一下日常学习吧
 
-[CLion cmake Error: could not load cache](https://blog.duhbb.com/2022/07/20/clion-cmake-error-could-not-load-cache)
+
+## leetcode
+
+- dan-diao-zhan: 单调栈
+- dfs-bfs: 深度有限和广度优先
+- for-fun-and-tools: 写着好玩儿的
+- loop-array: 循环数组
+- segment-tree: 线段树
+- un-category: 未分类的
+
+
+## 设计模式
+
+- desing-pattern: 设计模式
+
+
+
+

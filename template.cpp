@@ -34,34 +34,6 @@ void print(T t) {
 
 
 
-/*
-
-
-
-
-*/
-
-
-class Solution {
-public:
-	int minimumCost(vector<int>& cost) {
-
-		// 从大到小排序
-		std::sort(cost.begin(), cost.end(), [](int v1, int v2) {
-			return v1 > v2;
-			});
-
-		int num = cost.size();
-		int sum = 0;
-
-		for (int i = 0; i < num; i++) {
-			if (i % 3 < 2) sum += cost[i];
-		}
-
-		return sum;
-	}
-};
-
 
 
 ////////////////////////////////////////////////////////////////////////////////
