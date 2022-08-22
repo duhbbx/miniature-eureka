@@ -20,6 +20,11 @@ template<typename T>
 void print(T t) {
 
 
+	if (!t.empty()) {
+		cout << "容器为空............" << endl;
+		return;
+	}
+
 
 	for (typename T::const_iterator it = t.begin(); it != t.end() - 1; ++it) {
 		cout << *it << ", ";
@@ -32,6 +37,7 @@ void print(T t) {
 
 ////////////////////////////////////////////////////////////////////////////////
 /// 这里放OJ的类
+
 
 
 
