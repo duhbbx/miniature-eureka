@@ -69,7 +69,32 @@ public:
 	}
 
 	int getLevel(TreeNode* root) {
-		return 2;
+		if (root == nullptr) return 0;
+
+		int size = 0;
+		std::queue<TreeNode*> q;
+
+		q.push(root); ++size;
+
+		int level = 0;
+		while (!q.empty()) {
+
+			TreeNode* head = q.front();
+			--size;
+
+			if (size == 0) {
+				++level;
+				size = q.size();
+			}
+
+
+
+			if (head->left) q.push(head->left);
+			if (head->right) q.push(head->right);
+			q.pop();
+		}
+
+		return level;
 	}
 
 	/// <summary>
@@ -81,6 +106,29 @@ public:
 	/// <param name="totalLevel">总的层数</param>
 	/// <param name="res">记录结果的矩阵</param>
 	void recursive(TreeNode* root, int currentX, int currentLevel, int totalLevel, vector<vector<string>>* res) {
+
+
+		cout << "currentX = " << currentX << ", currentLevel = " << currentLevel << ", totalLevel = " << totalLevel << endl;
+
+		if (root == nullptr) return;
+
+
+		cout << "1. 准备设置值了" << endl;
+		(*res)[currentLevel - 1][currentX] = root->val;    // TODO val 需要转为字符串
+
+		int subTreeNodeNum = ipow(2, totalLevel - currentLevel + 1) - 1;
+
+
+		if (root->left) {
+			int leftNodeX = currentX - ((subTreeNodeNum >> 2) + 1);
+			recursive(root->left, leftNodeX, currentLevel + 1, totalLevel, res);
+		}
+
+
+		if (root->right) {
+			int rightNodeX = currentX + ((subTreeNodeNum >> 2) + 1);
+			recursive(root->left, rightNodeX, currentLevel + 1, totalLevel, res);
+		}
 
 	}
 
@@ -96,9 +144,10 @@ public:
 		// 创建矩阵
 		vector<vector<string>> res(level, vector<string>(full_node_num, ""));
 
-		recursive(root, full_node_num, 1, &res);
+		recursive(root, full_node_num, 1, level, &res);
 
 
+		return res;
 	}
 };
 
@@ -121,7 +170,7 @@ public:
 int main() {
 
 
-	/*print<vector<int>>({ 1, 2, 3, 4 });*/
+	print<vector<int>>({ 1, 2, 3, 4 });
 
 	return 0;
 }
