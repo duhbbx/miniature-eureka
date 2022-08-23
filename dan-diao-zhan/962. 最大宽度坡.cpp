@@ -1,9 +1,9 @@
 
-#include <iostream>				// 输入输出
-#include <vector>				// 可变长度数组
-#include <unordered_map>		// hashmap
-#include <stack>				// 栈
-#include <string>				// 字符串
+#include <iostream>                // 输入输出
+#include <vector>                // 可变长度数组
+#include <unordered_map>        // hashmap
+#include <stack>                // 栈
+#include <string>                // 字符串
 
 using namespace std;
 
@@ -19,40 +19,40 @@ using namespace std;
 /// </summary>
 class Solution {
 public:
-	int maxWidthRamp(vector<int>& nums) {
+    int maxWidthRamp(vector<int>& nums) {
 
-		stack<int> s;
-		int n = nums.size();
-		int len = 0;
+        stack<int> s;
+        int n = nums.size();
+        int len = 0;
 
-		if (n == 0) {
-			return 0;
-		}
+        if (n == 0) {
+            return 0;
+        }
 
-		// 将索引 0 推入到栈中
-		s.push(0);	// push 0 是几个意思?
+        // 将索引 0 推入到栈中
+        s.push(0);    // push 0 是几个意思?
 
-		// 以索引 0 开始生成一个严格单调的栈
-		for (int i = 1; i < n; i++) {
-			if (nums[s.top()] > nums[i]) {
-				s.push(i);
-			}
-		}
+        // 以索引 0 开始生成一个严格单调的栈
+        for (int i = 1; i < n; i++) {
+            if (nums[s.top()] > nums[i]) {
+                s.push(i);
+            }
+        }
 
-		// 倒着回来再来一次
-		for (int i = n - 1; i > 0; i--) {
-			while (!s.empty() && nums[s.top()] <= nums[i]) {
-				len = max(len, i - s.top());
-				s.pop();
-			}
+        // 倒着回来再来一次
+        for (int i = n - 1; i > 0; i--) {
+            while (!s.empty() && nums[s.top()] <= nums[i]) {
+                len = max(len, i - s.top());
+                s.pop();
+            }
 
-			if (s.empty()) {
-				return len;
-			}
-		}
+            if (s.empty()) {
+                return len;
+            }
+        }
 
-		return len;
-	}
+        return len;
+    }
 };
 
 
@@ -72,9 +72,9 @@ public:
 /// <param name="t"></param>
 template<typename T>
 void print(T t) {
-	for (typename T::const_iterator it = t.begin(); it != t.end(); ++it) {
-		cout << *it << endl;
-	}
+    for (typename T::const_iterator it = t.begin(); it != t.end(); ++it) {
+        cout << *it << endl;
+    }
 }
 
 
@@ -82,11 +82,11 @@ void print(T t) {
 int main() {
 
 
-	print<vector<int>>({ 1, 2, 3, 4, 5});
+    print<vector<int>>({ 1, 2, 3, 4, 5});
 
 
 
 
 
-	return 0;
+    return 0;
 }

@@ -4,6 +4,8 @@
 #include <unordered_map>        // hashmap
 #include <stack>                // Õ»
 #include <string>                // ×Ö·û´®
+#include <queue>                // ¶ÓÁÐ
+#include <climits>
 
 using namespace std;
 
@@ -17,6 +19,11 @@ using namespace std;
 template<typename T>
 void print(T t) {
 
+
+    if (!t.empty()) {
+        cout << "ÈÝÆ÷Îª¿Õ............" << endl;
+        return;
+    }
 
 
     for (typename T::const_iterator it = t.begin(); it != t.end() - 1; ++it) {
@@ -33,34 +40,7 @@ void print(T t) {
 
 
 
-class MovingAverage {
-public:
-    /** Initialize your data structure here. */
 
-    MovingAverage(int size) {
-        m_window_size = size;
-        m_sum = 0;
-        m_seq = 0;
-        m_array = new int[size];
-        for (int i = 0; i < size; i++) m_array[i] = 0;
-    }
-
-    double next(int val) {
-        int index = (m_seq) % m_window_size;
-        m_seq++;
-        m_sum = m_sum - m_array[index] + val;
-        m_array[index] = val;
-
-        return 1.0 * m_sum / ((m_seq >= m_window_size) ? m_window_size : m_seq);
-    }
-
-private:
-    int* m_array;
-    int m_sum;
-    int m_seq;
-    int m_window_size;
-
-};
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -79,11 +59,7 @@ private:
 int main() {
 
 
-    print<vector<int>>({ 1, 2, 3, 4 });
-
-
-
-
+    /*print<vector<int>>({ 1, 2, 3, 4 });*/
 
     return 0;
 }

@@ -1,9 +1,9 @@
 
-#include <iostream>				// 输入输出
-#include <vector>				// 可变长度数组
-#include <unordered_map>		// hashmap
-#include <stack>				// 栈
-#include <string>				// 字符串
+#include <iostream>                // 输入输出
+#include <vector>                // 可变长度数组
+#include <unordered_map>        // hashmap
+#include <stack>                // 栈
+#include <string>                // 字符串
 
 using namespace std;
 
@@ -15,14 +15,14 @@ using namespace std;
 
 class Solution {
 public:
-	int xorOperation(int n, int start) {
-		int res = 0;
-		for (int i = 0; i < n; ++i) {
-			res ^= (start + 2 * i);
-		}
+    int xorOperation(int n, int start) {
+        int res = 0;
+        for (int i = 0; i < n; ++i) {
+            res ^= (start + 2 * i);
+        }
 
-		return res;
-	}
+        return res;
+    }
 };
 
 
@@ -42,9 +42,9 @@ public:
 /// <param name="t"></param>
 template<typename T>
 void print(T t) {
-	for (typename T::const_iterator it = t.begin(); it != t.end(); ++it) {
-		cout << *it << endl;
-	}
+    for (typename T::const_iterator it = t.begin(); it != t.end(); ++it) {
+        cout << *it << endl;
+    }
 }
 
 
@@ -52,11 +52,11 @@ void print(T t) {
 int main() {
 
 
-	print<vector<int>>({ 1, 2, 3, 4 });
+    print<vector<int>>({ 1, 2, 3, 4 });
 
 
 
 
 
-	return 0;
+    return 0;
 }

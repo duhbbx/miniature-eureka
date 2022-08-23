@@ -1,9 +1,9 @@
 
-#include <iostream>				// 输入输出
-#include <vector>				// 可变长度数组
-#include <unordered_map>		// hashmap
-#include <stack>				// 栈
-#include <string>				// 字符串
+#include <iostream>                // 输入输出
+#include <vector>                // 可变长度数组
+#include <unordered_map>        // hashmap
+#include <stack>                // 栈
+#include <string>                // 字符串
 
 using namespace std;
 
@@ -15,11 +15,11 @@ using namespace std;
 /// <param name="t"></param>
 template<typename T>
 void print(T t) {
-	for (typename T::const_iterator it = t.begin(); it != t.end(); ++it) {
-		cout << *it << ", ";
-	}
+    for (typename T::const_iterator it = t.begin(); it != t.end(); ++it) {
+        cout << *it << ", ";
+    }
 
-	cout << endl;
+    cout << endl;
 }
 
 
@@ -54,34 +54,34 @@ void print(T t) {
 
 class Solution {
 public:
-	void sortColors(vector<int>& nums) {
+    void sortColors(vector<int>& nums) {
 
-		// [2 1 2 0 1 0]
+        // [2 1 2 0 1 0]
 
-		if (nums.size() == 0 || nums.size() == 1) return;
+        if (nums.size() == 0 || nums.size() == 1) return;
 
-		// 既然你状态有限，那我直接对状态进行计数不就可以了，哈哈
-		int counter[] = { 0, 0, 0 };
+        // 既然你状态有限，那我直接对状态进行计数不就可以了，哈哈
+        int counter[] = { 0, 0, 0 };
 
-		for (auto i : nums) {
-			if (i == 0)
-				counter[0]++;
-			else if (i == 1)
-				counter[1]++;
-			else
-				counter[2]++;
-		}
+        for (auto i : nums) {
+            if (i == 0)
+                counter[0]++;
+            else if (i == 1)
+                counter[1]++;
+            else
+                counter[2]++;
+        }
 
-		int begin = 0;
-		int end = 0;
-		for (int i = 0; i < 3; i++) {
-			end = begin + counter[i];
+        int begin = 0;
+        int end = 0;
+        for (int i = 0; i < 3; i++) {
+            end = begin + counter[i];
 
-			for (int j = begin; j < end; j++)
-				nums[j] = i;
-			begin = end;
-		}
-	}
+            for (int j = begin; j < end; j++)
+                nums[j] = i;
+            begin = end;
+        }
+    }
 };
 
 */
@@ -92,26 +92,26 @@ public:
 
 class Solution {
 public:
-	void sortColors(vector<int>& nums) {
-		int n = nums.size();
-		int p0 = 0, p1 = 0;
-		for (int i = 0; i < n; ++i) {
-			if (nums[i] == 1) {
-				swap(nums[i], nums[p1]);
-				++p1;
-			}
-			else if (nums[i] == 0) {
-				swap(nums[i], nums[p0]);
-				if (p0 < p1) {
-					swap(nums[i], nums[p1]);
-				}
-				++p0;
-				++p1;
-			}
+    void sortColors(vector<int>& nums) {
+        int n = nums.size();
+        int p0 = 0, p1 = 0;
+        for (int i = 0; i < n; ++i) {
+            if (nums[i] == 1) {
+                swap(nums[i], nums[p1]);
+                ++p1;
+            }
+            else if (nums[i] == 0) {
+                swap(nums[i], nums[p0]);
+                if (p0 < p1) {
+                    swap(nums[i], nums[p1]);
+                }
+                ++p0;
+                ++p1;
+            }
 
-			print(nums);
-		}
-	}
+            print(nums);
+        }
+    }
 };
 
 */
@@ -119,33 +119,33 @@ public:
 
 class Solution {
 public:
-	void partition(vector<int>& nums) {
-		int n = nums.size();
-		int p0 = 0, p1 = n - 1;
-		int s = 0;
-		while (p0 < p1) {
-			while (nums[p1] > nums[s])
-				--p1;
+    void partition(vector<int>& nums) {
+        int n = nums.size();
+        int p0 = 0, p1 = n - 1;
+        int s = 0;
+        while (p0 < p1) {
+            while (nums[p1] > nums[s])
+                --p1;
 
-			if (p1 != s) {
-				swap(nums[s], nums[p1]);
-				s = p1;
-				--p1;
-			}
+            if (p1 != s) {
+                swap(nums[s], nums[p1]);
+                s = p1;
+                --p1;
+            }
 
-			while (nums[p0] < nums[s]) {
-				++p0;
-			}
+            while (nums[p0] < nums[s]) {
+                ++p0;
+            }
 
-			if (p0 != s) {
-				swap(nums[s], nums[p0]);
-				s = p0;
-				++p0;
-			}
+            if (p0 != s) {
+                swap(nums[s], nums[p0]);
+                s = p0;
+                ++p0;
+            }
 
-			print(nums);
-		}
-	}
+            print(nums);
+        }
+    }
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -163,11 +163,11 @@ public:
 
 int main() {
 
-	vector<int> nums = { 3, 1, 1, 2, 3, 4, 2, 5, 6, 8, 1 };
-	Solution s;
-	s.partition(nums);
+    vector<int> nums = { 3, 1, 1, 2, 3, 4, 2, 5, 6, 8, 1 };
+    Solution s;
+    s.partition(nums);
 
-	print(nums);
+    print(nums);
 
-	return 0;
+    return 0;
 }

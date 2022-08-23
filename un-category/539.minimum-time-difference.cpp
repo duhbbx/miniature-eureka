@@ -1,9 +1,9 @@
 ﻿
-#include <iostream>				// 输入输出
-#include <vector>				// 可变长度数组
-#include <unordered_map>		// hashmap
-#include <stack>				// 栈
-#include <string>				// 字符串
+#include <iostream>                // 输入输出
+#include <vector>                // 可变长度数组
+#include <unordered_map>        // hashmap
+#include <stack>                // 栈
+#include <string>                // 字符串
 #include <algorithm>
 
 using namespace std;
@@ -18,12 +18,12 @@ using namespace std;
 template<typename T>
 void print(T t) {
 
-	for (typename T::const_iterator it = t.begin(); it != t.end() - 1; ++it) {
-		cout << *it << ", ";
-	}
+    for (typename T::const_iterator it = t.begin(); it != t.end() - 1; ++it) {
+        cout << *it << ", ";
+    }
 
-	// 打印最后一个数据
-	cout << *(t.end() - 1) << endl;
+    // 打印最后一个数据
+    cout << *(t.end() - 1) << endl;
 }
 
 
@@ -51,36 +51,36 @@ void print(T t) {
 class Solution {
 public:
 
-	int get(string& s) {
-		return 60 * ((s[0] - '0') * 10 + (s[1] - '0')) + 10 * (s[3] - '0') + (s[4] - '0');
-	}
+    int get(string& s) {
+        return 60 * ((s[0] - '0') * 10 + (s[1] - '0')) + 10 * (s[3] - '0') + (s[4] - '0');
+    }
 
-	int findMinDifference(vector<string>& timePoints) {
-		if (timePoints.size() > 1440) return 0;
+    int findMinDifference(vector<string>& timePoints) {
+        if (timePoints.size() > 1440) return 0;
 
 
-		if (timePoints.size() < 2) return 0;
+        if (timePoints.size() < 2) return 0;
 
-		vector<int> list(timePoints.size(), 0);
+        vector<int> list(timePoints.size(), 0);
 
-		for (int i = 0; i < timePoints.size(); i++) {
-			list[i] = get(timePoints[i]);
-		}
+        for (int i = 0; i < timePoints.size(); i++) {
+            list[i] = get(timePoints[i]);
+        }
 
-		sort(list.begin(), list.end());
+        sort(list.begin(), list.end());
 
-		int interval = list[1] - list[0];
-		for (int i = 1; i < list.size(); ++i) {
-			int tmp = list[i] - list[i - 1];
-			if (tmp < interval) interval = tmp;
-		}
+        int interval = list[1] - list[0];
+        for (int i = 1; i < list.size(); ++i) {
+            int tmp = list[i] - list[i - 1];
+            if (tmp < interval) interval = tmp;
+        }
 
-		int inverse = 24 * 60 - list.back() + list.front();
-		if (interval > inverse) interval = inverse;
-		// print<vector<int>>(list);
+        int inverse = 24 * 60 - list.back() + list.front();
+        if (interval > inverse) interval = inverse;
+        // print<vector<int>>(list);
 
-		return interval;
-	}
+        return interval;
+    }
 };
 
 
@@ -98,17 +98,17 @@ public:
 int main() {
 
 
-	print<vector<int>>({ 1, 2, 3, 4 });
+    print<vector<int>>({ 1, 2, 3, 4 });
 
 
 
-	Solution s;
+    Solution s;
 
-	vector<string> timePoints = { "23:59", "00:01" };
+    vector<string> timePoints = { "23:59", "00:01" };
 
-	
+    
 
-	cout << s.findMinDifference(timePoints) << endl;
+    cout << s.findMinDifference(timePoints) << endl;
 
-	return 0;
+    return 0;
 }

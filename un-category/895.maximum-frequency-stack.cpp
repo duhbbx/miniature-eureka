@@ -1,9 +1,9 @@
 
-#include <iostream>				// 输入输出
-#include <vector>				// 可变长度数组
-#include <unordered_map>		// hashmap
-#include <stack>				// 栈
-#include <string>				// 字符串
+#include <iostream>                // 输入输出
+#include <vector>                // 可变长度数组
+#include <unordered_map>        // hashmap
+#include <stack>                // 栈
+#include <string>                // 字符串
 
 using namespace std;
 
@@ -19,11 +19,11 @@ void print(T t) {
 
 
 
-	for (typename T::const_iterator it = t.begin(); it != t.end() - 1; ++it) {
-		cout << *it << ", ";
-	}
+    for (typename T::const_iterator it = t.begin(); it != t.end() - 1; ++it) {
+        cout << *it << ", ";
+    }
 
-	cout << *(t.end() - 1) << endl;
+    cout << *(t.end() - 1) << endl;
 }
 
 
@@ -63,11 +63,11 @@ public:
 int main() {
 
 
-	print<vector<int>>({ 1, 2, 3, 4 });
+    print<vector<int>>({ 1, 2, 3, 4 });
 
 
 
 
 
-	return 0;
+    return 0;
 }

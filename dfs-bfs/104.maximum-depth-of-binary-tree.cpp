@@ -3,7 +3,7 @@
 #include <vector>               // 可变长度数组
 #include <unordered_map>        // hashmap
 #include <stack>                // 栈
-#include <string>				// 字符串
+#include <string>                // 字符串
 #include <queue>                // 队列
 using namespace std;
 
@@ -19,11 +19,11 @@ void print(T t) {
 
 
 
-	for (typename T::const_iterator it = t.begin(); it != t.end() - 1; ++it) {
-		cout << *it << ", ";
-	}
+    for (typename T::const_iterator it = t.begin(); it != t.end() - 1; ++it) {
+        cout << *it << ", ";
+    }
 
-	cout << *(t.end() - 1) << endl;
+    cout << *(t.end() - 1) << endl;
 }
 
 
@@ -50,65 +50,65 @@ struct TreeNode {
 
 class Solution {
 public:
-	int maxDepth(TreeNode* root) {
+    int maxDepth(TreeNode* root) {
 
-		if (root == nullptr) return 0;
+        if (root == nullptr) return 0;
 
-		int size = 0;
-		std::queue<TreeNode*> q;
+        int size = 0;
+        std::queue<TreeNode*> q;
 
-		q.push(root); ++size;
+        q.push(root); ++size;
 
-		int level = 0;
-		while (!q.empty()) {
+        int level = 0;
+        while (!q.empty()) {
 
-			TreeNode* head = q.front();
-			--size;
+            TreeNode* head = q.front();
+            --size;
 
-			if (size == 0) {
-				++level;
-				size = q.size();
-			}
+            if (size == 0) {
+                ++level;
+                size = q.size();
+            }
 
 
 
-			if (head->left) q.push(head->left);
-			if (head->right) q.push(head->right);
-			q.pop();
-		}
+            if (head->left) q.push(head->left);
+            if (head->right) q.push(head->right);
+            q.pop();
+        }
 
-		return level;
-	}
+        return level;
+    }
 };
 
 
 class Solution1 {
 public:
-	int maxDepth(TreeNode* root) {
+    int maxDepth(TreeNode* root) {
 
-		if (root == nullptr) return 0;
+        if (root == nullptr) return 0;
 
-		int size = 0;
-		std::queue<TreeNode*> q;
+        int size = 0;
+        std::queue<TreeNode*> q;
 
-		q.push(root); ++size;
+        q.push(root); ++size;
 
-		int level = 0;
-		while (!q.empty()) {
-			while (size > 0) {
-				TreeNode* head = q.front();
-				q.pop();
-				if (head->left) q.push(head->left);
-				if (head->right) q.push(head->right);
-				--size;
-			}
+        int level = 0;
+        while (!q.empty()) {
+            while (size > 0) {
+                TreeNode* head = q.front();
+                q.pop();
+                if (head->left) q.push(head->left);
+                if (head->right) q.push(head->right);
+                --size;
+            }
 
-			++level;
-			size = q.size();
-		}
+            ++level;
+            size = q.size();
+        }
 
-		return level;
-	}
+        return level;
+    }
 };
 
 
@@ -119,11 +119,11 @@ public:
 int main() {
 
 
-	print<vector<int>>({ 1, 2, 3, 4 });
+    print<vector<int>>({ 1, 2, 3, 4 });
 
 
 
 
 
-	return 0;
+    return 0;
 }
