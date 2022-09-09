@@ -9,4 +9,4 @@ set(CMAKE_CXX_STANDARD 14)
 
 
 add_executable(leetcode
-               "un-category/剑指 Offer II 024. 反转链表.cpp")
+               "un-category/剑指 Offer II 024. 反转链表.cpp" ListNode.h)

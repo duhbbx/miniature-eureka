@@ -1,18 +1,18 @@
-#include <iostream>              // ÊäÈëÊä³ö
-#include <vector>                // ¿É±ä³¤¶ÈÊı×é
+#include <iostream>              // è¾“å…¥è¾“å‡º
+#include <vector>                // å¯å˜é•¿åº¦æ•°ç»„
 #include <unordered_map>         // hashmap
-#include <stack>                 // Õ»
-#include <string>                // ×Ö·û´®
-#include <queue>                 // ¶ÓÁĞ
-#include <climits>               // ¼«ÏŞÖµ
-#include <algorithm>             // Ëã·¨Ïà¹ØµÄ
+#include <stack>                 // æ ˆ
+#include <string>                // å­—ç¬¦ä¸²
+#include <queue>                 // é˜Ÿåˆ—
+#include <climits>               // æé™å€¼
+#include <algorithm>             // ç®—æ³•ç›¸å…³çš„
 
 using namespace std;
 
 
 
 /// <summary>
-/// Êä³öÈİÆ÷ÖĞµÄÄÚÈİ
+/// è¾“å‡ºå®¹å™¨ä¸­çš„å†…å®¹
 /// </summary>
 /// <typeparam name="T"></typeparam>
 /// <param name="t"></param>
@@ -21,7 +21,7 @@ void print(T t) {
 
 
     if (!t.empty()) {
-        cout << "ÈİÆ÷Îª¿Õ............" << endl;
+        cout << "å®¹å™¨ä¸ºç©º............" << endl;
         return;
     }
 
@@ -36,17 +36,9 @@ void print(T t) {
 
 
 ////////////////////////////////////////////////////////////////////////////////
-/// ÕâÀï·ÅOJµÄÀà
+/// è¿™é‡Œæ”¾OJçš„ç±»
 
-
-struct ListNode {
-    int val;
-    ListNode* next;
-    ListNode() : val(0), next(nullptr) {}
-    ListNode(int x) : val(x), next(nullptr) {}
-    ListNode(int x, ListNode* next) : val(x), next(next) {}
-};
-
+#include "../ListNode.h"
 
 class Solution {
 public:
@@ -58,7 +50,7 @@ public:
             return my_head;
         }
 
-        ListNode* p = nullptr;
+        ListNode* p;
 
         while (my_head) {
             if (p == nullptr) {
@@ -75,6 +67,24 @@ public:
 
         return p;
     }
+
+
+    ListNode* reverseListFromLeetCode(ListNode* head) {
+        ListNode* prev = nullptr;
+        ListNode* curr = head;
+        while (curr) {
+            ListNode* next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+
+//    ä½œè€…ï¼šLeetCode-Solution
+//            é“¾æ¥ï¼šhttps://leetcode.cn/problems/UHnkqh/solution/fan-zhuan-lian-biao-by-leetcode-solution-34oi/
+//            æ¥æºï¼šåŠ›æ‰£ï¼ˆLeetCodeï¼‰
+//    è‘—ä½œæƒå½’ä½œè€…æ‰€æœ‰ã€‚å•†ä¸šè½¬è½½è¯·è”ç³»ä½œè€…è·å¾—æˆæƒï¼Œéå•†ä¸šè½¬è½½è¯·æ³¨æ˜å‡ºå¤„ã€‚
 };
 
 
@@ -85,19 +95,15 @@ public:
 ////////////////////////////////////////////////////////////////////////////////
 
 
-
-
-
-
-
-
-
-
-
-
 int main() {
 
     cout << "" << endl;
+
+
+    auto* p = ListNode::create({1, 2, 3, 4, 5, 6});
+
+    p->print();
+    ListNode::destroy(p);
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/
 
