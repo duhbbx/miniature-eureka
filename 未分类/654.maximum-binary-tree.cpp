@@ -1,9 +1,9 @@
 
-#include <iostream>                // ÊäÈëÊä³ö
-#include <vector>                // ¿É±ä³¤¶ÈÊý×é
+#include <iostream>                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+#include <vector>                // ï¿½É±ä³¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 #include <unordered_map>        // hashmap
 #include <stack>                // Õ»
-#include <string>                // ×Ö·û´®
+#include <string>                // ï¿½Ö·ï¿½ï¿½ï¿½
 
 using namespace std;
 
@@ -11,9 +11,9 @@ using namespace std;
 
 
 ////////////////////////////////////////////////////////////////////////////////
-/// ÕâÀï·ÅOJµÄÀà
+/// ï¿½ï¿½ï¿½ï¿½ï¿½OJï¿½ï¿½ï¿½ï¿½
 /**
- * Definition for a binary tree node.
+ * Definition for a binary æ ‘ node.
  */
 
 struct TreeNode {
@@ -36,7 +36,7 @@ public:
         int index = begin;
         
     
-        // ÕÒµ½×î´óÖµ
+        // ï¿½Òµï¿½ï¿½ï¿½ï¿½Öµ
         for (int i = begin + 1; i <= end; i++) {
             if (max < nums[i]) {
                 max = nums[i];
@@ -80,7 +80,7 @@ public:
 
 
 /// <summary>
-/// Êä³öÈÝÆ÷ÖÐµÄÄÚÈÝ
+/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½
 /// </summary>
 /// <typeparam name="T"></typeparam>
 /// <param name="t"></param>

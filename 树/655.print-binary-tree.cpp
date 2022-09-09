@@ -1,10 +1,10 @@
 
-#include <iostream>                // ÊäÈëÊä³ö
-#include <vector>                // ¿É±ä³¤¶ÈÊı×é
+#include <iostream>                // è¾“å…¥è¾“å‡º
+#include <vector>                // å¯å˜é•¿åº¦æ•°ç»„
 #include <unordered_map>        // hashmap
-#include <stack>                // Õ»
-#include <string>                // ×Ö·û´®
-#include <queue>                // ¶ÓÁĞ
+#include <stack>                // æ ˆ
+#include <string>                // å­—ç¬¦ä¸²
+#include <queue>                // é˜Ÿåˆ—
 #include <climits>
 
 using namespace std;
@@ -12,7 +12,7 @@ using namespace std;
 
 
 /// <summary>
-/// Êä³öÈİÆ÷ÖĞµÄÄÚÈİ
+/// è¾“å‡ºå®¹å™¨ä¸­çš„å†…å®¹
 /// </summary>
 /// <typeparam name="T"></typeparam>
 /// <param name="t"></param>
@@ -21,7 +21,7 @@ void print(T t) {
 
 
     if (!t.empty()) {
-        cout << "ÈİÆ÷Îª¿Õ............" << endl;
+        cout << "å®¹å™¨ä¸ºç©º............" << endl;
         return;
     }
 
@@ -36,7 +36,7 @@ void print(T t) {
 
 
 ////////////////////////////////////////////////////////////////////////////////
-/// ÕâÀï·ÅOJµÄÀà
+/// è¿™é‡Œæ”¾OJçš„ç±»
 
 
 
@@ -53,7 +53,7 @@ struct TreeNode {
 class Solution {
 public:
     
-    // Æ½·½ÇóÃİ
+    // å¹³æ–¹æ±‚å¹‚
     int ipow(int base, int exp) {
         int result = 1;
         for (int i = 0; i < exp; i++) {
@@ -97,11 +97,11 @@ public:
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="root">µ±Ç°¸ù½Úµã</param>
-    /// <param name="currentX">¸ù½ÚµãµÄX×ø±ê</param>
-    /// <param name="currentLevel">µ±Ç°µÄ²ãÊı</param>
-    /// <param name="totalLevel">×ÜµÄ²ãÊı</param>
-    /// <param name="res">¼ÇÂ¼½á¹ûµÄ¾ØÕó</param>
+    /// <param name="root">å½“å‰æ ¹èŠ‚ç‚¹</param>
+    /// <param name="currentX">æ ¹èŠ‚ç‚¹çš„Xåæ ‡</param>
+    /// <param name="currentLevel">å½“å‰çš„å±‚æ•°</param>
+    /// <param name="totalLevel">æ€»çš„å±‚æ•°</param>
+    /// <param name="res">è®°å½•ç»“æœçš„çŸ©é˜µ</param>
     void recursive(TreeNode* root, int currentX, int currentLevel, int totalLevel, vector<vector<string>>* res) {
 
 
@@ -110,9 +110,9 @@ public:
         if (root == nullptr) return;
 
 
-        // cout << "1. ×¼±¸ÉèÖÃÖµÁË" << endl;
-        (*res)[currentLevel - 1][currentX] = to_string(root->val);    // TODO val ĞèÒª×ªÎª×Ö·û´®
-        // cout << "2. µ±Ç°½ÚµãµÄÒÑ¾­´¦ÀíÍæ....." << endl;
+        // cout << "1. å‡†å¤‡è®¾ç½®å€¼äº†" << endl;
+        (*res)[currentLevel - 1][currentX] = to_string(root->val);    // TODO val éœ€è¦è½¬ä¸ºå­—ç¬¦ä¸²
+        // cout << "2. å½“å‰èŠ‚ç‚¹çš„å·²ç»å¤„ç†ç©....." << endl;
 
         int subTreeNodeNum = ipow(2, totalLevel - currentLevel + 1) - 1;
 
@@ -134,14 +134,14 @@ public:
 
     vector<vector<string>> printTree(TreeNode* root) {
 
-        // ¼ÆËãÕû¿ÃÊ÷µÄ²ãÊı
+        // è®¡ç®—æ•´æ£µæ ‘çš„å±‚æ•°
         int level = getLevel(root);
 
         int full_node_num = ipow(2, level) - 1;
 
         // cout << "full_node_num = " << full_node_num << endl;
 
-        // ´´½¨¾ØÕó
+        // åˆ›å»ºçŸ©é˜µ
         vector<vector<string>> res(level, vector<string>(full_node_num, ""));
 
         recursive(root, full_node_num >> 1, 1, level, &res);

@@ -1,16 +1,16 @@
 
-#include <iostream>             // ÊäÈëÊä³ö
-#include <vector>               // ¿É±ä³¤¶ÈÊý×é
+#include <iostream>             // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+#include <vector>               // ï¿½É±ä³¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 #include <unordered_map>        // hashmap
 #include <stack>                // Õ»
-#include <string>                // ×Ö·û´®
-#include <queue>                // ¶ÓÁÐ
+#include <string>                // ï¿½Ö·ï¿½ï¿½ï¿½
+#include <queue>                // ï¿½ï¿½ï¿½ï¿½
 using namespace std;
 
 
 
 /// <summary>
-/// Êä³öÈÝÆ÷ÖÐµÄÄÚÈÝ
+/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½
 /// </summary>
 /// <typeparam name="T"></typeparam>
 /// <param name="t"></param>
@@ -29,7 +29,7 @@ void print(T t) {
 
 
 /*
-Definition for a binary tree node.
+Definition for a binary æ ‘ node.
 */
 struct TreeNode {
     int val;
@@ -43,7 +43,7 @@ struct TreeNode {
 
 
 ////////////////////////////////////////////////////////////////////////////////
-/// ÕâÀï·ÅOJµÄÀà
+/// ï¿½ï¿½ï¿½ï¿½ï¿½OJï¿½ï¿½ï¿½ï¿½
 
 
 

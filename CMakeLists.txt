@@ -8,5 +8,4 @@ set(CMAKE_CXX_STANDARD 14)
 # add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>") #使用utf-8文件编码
 
 
-add_executable(leetcode
-               "un-category/剑指 Offer II 024. 反转链表.cpp" ListNode.h)
+add_executable(leetcode "二叉树的路径问题/543. 二叉树的直径.cpp")

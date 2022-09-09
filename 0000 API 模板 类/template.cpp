@@ -11,11 +11,7 @@ using namespace std;
 
 
 
-/// <summary>
-/// 输出容器中的内容
-/// </summary>
-/// <typeparam name="T"></typeparam>
-/// <param name="t"></param>
+
 template<typename T>
 void print(T t) {
 
