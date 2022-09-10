@@ -6,6 +6,8 @@
 #include <queue>                 // 队列
 #include <climits>               // 极限值
 #include <algorithm>             // 算法相关的
+#include "../0000 API 模板 类/TreeNode.h"
+#include "../0000 API 模板 类/ListNode.h"
 
 using namespace std;
 
@@ -44,9 +46,12 @@ void print(T t) {
 
 
 
-
-
-
+void printCurrentFileName() {
+    string file = __FILE__;
+    int pos = file.find_last_of("/");
+    string fileName = pos == -1 ? file : file.substr(pos+1);
+    cout << "【当前题目为：" << fileName << "】" << endl;
+}
 
 
 
@@ -55,7 +60,7 @@ void print(T t) {
 int main() {
 
 
-    cout << "【当前题目为：】" << endl;
+    printCurrentFileName();
 
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/

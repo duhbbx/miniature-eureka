@@ -1,11 +1,30 @@
+
+#ifndef MY_VECTOR_HELPER_H
+#define MY_VECTOR_HELPER_H
+
 #include <algorithm>
-Èç¹ûÏë sort À´½µĞò, ¿ÉÖØĞ´ comp Õâ¸öº¯Êı
-ÁíÍâÖØĞ´ÅÅĞò¹æÔòÕâÀïÓĞ¿ÓµÄ, ±È½Ïº¯ÊıÖĞ×îºÃ¶¼²»ÒªÓÃµÈÓÚºÅ
-// ¶¨Òå±È½Ïº¯Êı
+#include <vector>
+
+using namespace std;
+
+/*
+å¦‚æœæƒ³ sort æ¥é™åº, å¯é‡å†™ comp è¿™ä¸ªå‡½æ•°
+å¦å¤–é‡å†™æ’åºè§„åˆ™è¿™é‡Œæœ‰å‘çš„, æ¯”è¾ƒå‡½æ•°ä¸­æœ€å¥½éƒ½ä¸è¦ç”¨ç­‰äºå·
+// å®šä¹‰æ¯”è¾ƒå‡½æ•°
+*/
+
+
 bool compare(int a, int b) {
-    // ÉıĞòÅÅÁĞ, Èç¹û¸ÄÎª return a>b, ÔòÎª½µĞò
+    // å‡åºæ’åˆ—, å¦‚æœæ”¹ä¸º return a>b, åˆ™ä¸ºé™åº
     return a < b;
 }
 
-// µ÷ÓÃ
-sort(a, a + 20, compare);
+void sort() {
+    vector<int> a = {};
+    // è°ƒç”¨
+    sort(a.begin(), a.begin() + 20, compare);
+}
+
+
+
+#endif

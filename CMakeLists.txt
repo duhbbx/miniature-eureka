@@ -8,4 +8,4 @@ set(CMAKE_CXX_STANDARD 14)
 # add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>") #使用utf-8文件编码
 
 
-add_executable(leetcode "二叉树的路径问题/543. 二叉树的直径.cpp")
+add_executable(leetcode "未分类/1815. 得到新鲜甜甜圈的最多组数.cpp")
