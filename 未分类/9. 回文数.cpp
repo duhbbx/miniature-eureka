@@ -1,3 +1,8 @@
+//
+// Created by duhbb on 2022/9/11.
+//
+
+
 #include <iostream>              // 输入输出
 #include <vector>                // 可变长度数组
 #include <unordered_map>         // hashmap
@@ -37,6 +42,60 @@ void print(T t) {
 /// 这里放OJ的类
 
 
+class Solution {
+public:
+    bool isPalindrome(int x) {
+
+        if (x < 0) {
+            return false;
+        }
+
+        long reverse = 0;
+        int a = x;
+        while(x > 0) {
+            // 这样可能存在溢出
+            reverse = 10 * reverse + x % 10;
+            x /= 10;
+        }
+
+        return a == reverse;
+
+    }
+
+
+    bool isPalindrome_1(int x) {
+
+        if (x < 0) {
+            return false;
+        }
+
+        vector<int> bit_vec = {};
+
+
+        while(x) {
+            bit_vec.push_back(x % 10);
+            x /= 10;
+        }
+
+        // print(bit_vec);
+
+        int size = bit_vec.size();
+
+        int i = 0;
+        int j = size-1;
+
+        while(i < j) {
+            if (bit_vec[i] != bit_vec[j]) {
+                return false;
+            }
+            ++i;
+            --j;
+        }
+
+        return true;
+    }
+};
+
 
 
 
@@ -61,6 +120,10 @@ int main() {
 
 
     printCurrentFileName();
+
+    Solution s;
+
+    s.isPalindrome(10);
 
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/

@@ -64,11 +64,11 @@ void print(T t) {
 class Solution {
 public:
     int maxHappyGroups(int batchSize, vector<int> &groups) {
-        int *que = new int[9]{0};           // 创建一个长度为 9 的全 0 数组
+        int *que = new int[9]{0};                   // 创建一个长度为 9 的全 0 数组
         int res = 0;
         for (int i = 0; i < groups.size(); i++) {
             if (groups[i] % batchSize == 0) {
-                res++;                      // 能够一批搞完了优先处理
+                res++;                              // 能够一批搞完了优先处理
             } else {
                 que[groups[i] % batchSize] += 1;    // 取余记录一下有几个不同的
             }
@@ -86,14 +86,17 @@ public:
         }
 
 
+        // batchSize为偶数情况
         if (batchSize % 2 == 0) {
             res += que[batchSize / 2] / 2;
             que[batchSize / 2] -= ((que[batchSize / 2] / 2) * 2);
         }
 
+        // 剩下还没匹配的弄成一个 8 维数组
         int dp[que[1] + 1][que[2] + 1][que[3] + 1][que[4] + 1][que[5] + 1][que[6] + 1][que[7] + 1][que[8] + 1];
 
 
+        // 这里相当于对剩下的数的全排列
         for (int a = 0; a <= que[1]; a++) {
             for (int b = 0; b <= que[2]; b++) {
                 for (int c = 0; c <= que[3]; c++) {
@@ -102,29 +105,40 @@ public:
                             for (int f = 0; f <= que[6]; f++) {
                                 for (int g = 0; g <= que[7]; g++) {
                                     for (int h = 0; h <= que[8]; h++) {
+
+
                                         dp[a][b][c][d][e][f][g][h] = 0;
+
                                         int tempsum = a * 1 + b * 2 + c * 3 + d * 4 + e * 5 + f * 6 + g * 7 + h * 8;
+
                                         if (a > 0) {
                                             dp[a][b][c][d][e][f][g][h] = max(dp[a][b][c][d][e][f][g][h], dp[a - 1][b][c][d][e][f][g][h] + ((tempsum - 1) % batchSize == 0));
                                         }
+
                                         if (b > 0) {
                                             dp[a][b][c][d][e][f][g][h] = max(dp[a][b][c][d][e][f][g][h], dp[a][b - 1][c][d][e][f][g][h] + ((tempsum - 2) % batchSize == 0));
                                         }
+
                                         if (c > 0) {
                                             dp[a][b][c][d][e][f][g][h] = max(dp[a][b][c][d][e][f][g][h], dp[a][b][c - 1][d][e][f][g][h] + ((tempsum - 3) % batchSize == 0));
                                         }
+
                                         if (d > 0) {
                                             dp[a][b][c][d][e][f][g][h] = max(dp[a][b][c][d][e][f][g][h], dp[a][b][c][d - 1][e][f][g][h] + ((tempsum - 4) % batchSize == 0));
                                         }
+
                                         if (e > 0) {
                                             dp[a][b][c][d][e][f][g][h] = max(dp[a][b][c][d][e][f][g][h], dp[a][b][c][d][e - 1][f][g][h] + ((tempsum - 5) % batchSize == 0));
                                         }
+
                                         if (f > 0) {
                                             dp[a][b][c][d][e][f][g][h] = max(dp[a][b][c][d][e][f][g][h], dp[a][b][c][d][e][f - 1][g][h] + ((tempsum - 6) % batchSize == 0));
                                         }
+
                                         if (g > 0) {
                                             dp[a][b][c][d][e][f][g][h] = max(dp[a][b][c][d][e][f][g][h], dp[a][b][c][d][e][f][g - 1][h] + ((tempsum - 7) % batchSize == 0));
                                         }
+
                                         if (h > 0) {
                                             dp[a][b][c][d][e][f][g][h] = max(dp[a][b][c][d][e][f][g][h], dp[a][b][c][d][e][f][g][h - 1] + ((tempsum - 8) % batchSize == 0));
                                         }

@@ -29,7 +29,7 @@ void print(T t) {
 
 
 /*
-Definition for a binary 树 node.
+Definition for a binary 二叉树 node.
 */
 struct TreeNode {
     int val;
