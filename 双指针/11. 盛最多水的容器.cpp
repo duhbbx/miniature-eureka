@@ -1,3 +1,6 @@
+//
+// Created by duhbb on 2022/9/12.
+//
 #include <iostream>              // 输入输出
 #include <vector>                // 可变长度数组
 #include <unordered_map>         // hashmap
@@ -38,7 +41,32 @@ void print(T t) {
 
 
 
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
 
+
+        int i = 0, j = height.size() - 1;
+
+        int res = 0;
+
+        while(i < j) {
+            int tmpRes = (j - i) * min(height[i], height[j]);
+            if (res < tmpRes) {
+                res = tmpRes;
+            }
+
+            if (height[i] < height[j]) {
+                ++i;
+            } else {
+                --j;
+            }
+        }
+
+
+        return res;
+    }
+};
 
 
 ////////////////////////////////////////////////////////////////////////////////

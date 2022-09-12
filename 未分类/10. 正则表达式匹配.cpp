@@ -1,3 +1,6 @@
+//
+// Created by duhbb on 2022/9/12.
+//
 #include <iostream>              // 输入输出
 #include <vector>                // 可变长度数组
 #include <unordered_map>         // hashmap
@@ -10,8 +13,6 @@
 #include "../0000 API 模板 类/ListNode.h"
 
 using namespace std;
-
-
 
 
 template<typename T>
@@ -38,6 +39,21 @@ void print(T t) {
 
 
 
+class Solution {
+public:
+    /**
+     * 给你一个字符串 s 和一个字符规律 p
+     * @param s 给定字符串
+     * @param p 模式
+     * @return 是否 match
+     */
+    bool isMatch(string s, string p) {
+
+
+        return false;
+    }
+};
+
 
 
 
@@ -49,12 +65,9 @@ void print(T t) {
 void printCurrentFileName() {
     string file = __FILE__;
     int pos = file.find_last_of("/");
-    string fileName = pos == -1 ? file : file.substr(pos+1);
-    cout << "\n【当前题目为：" << fileName << "】" << endl;
+    string fileName = pos == -1 ? file : file.substr(pos + 1);
+    cout << "【当前题目为：" << fileName << "】" << endl;
 }
-
-
-
 
 
 int main() {

@@ -1,3 +1,8 @@
+//
+// Created by duhbb on 2022/9/12.
+//
+
+
 #include <iostream>              // 输入输出
 #include <vector>                // 可变长度数组
 #include <unordered_map>         // hashmap
@@ -37,7 +42,24 @@ void print(T t) {
 /// 这里放OJ的类
 
 
+/**
+ * 排序，然后二分，用了 c++ 里面的一个工具
+ */
 
+class Solution {
+public:
+    int specialArray(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        int n = nums.size();
+        for (int i = 0; i <= n; i++) {
+            int index = std::lower_bound(nums.begin(), nums.end(), i) - nums.begin();
+            if (n - index == i) {
+                return i;
+            }
+        }
+        return -1;
+    }
+};
 
 
 
@@ -50,7 +72,7 @@ void printCurrentFileName() {
     string file = __FILE__;
     int pos = file.find_last_of("/");
     string fileName = pos == -1 ? file : file.substr(pos+1);
-    cout << "\n【当前题目为：" << fileName << "】" << endl;
+    cout << "【当前题目为：" << fileName << "】" << endl;
 }
 
 
@@ -61,6 +83,11 @@ int main() {
 
 
     printCurrentFileName();
+
+    Solution solution;
+
+    vector<int> nums = {3, 5};
+    solution.specialArray(nums);
 
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/
