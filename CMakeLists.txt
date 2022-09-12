@@ -8,4 +8,4 @@ set(CMAKE_CXX_STANDARD 14)
 # add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>") #使用utf-8文件编码
 
 
-add_executable(leetcode "双指针/15. 三数之和.cpp")
+add_executable(leetcode "整数操作/670. 最大交换.cpp")
