@@ -1,3 +1,6 @@
+//
+// Created by duhbb on 2022/9/13.
+//
 #include <iostream>              // 输入输出
 #include <vector>                // 可变长度数组
 #include <unordered_map>         // hashmap
@@ -36,15 +39,15 @@ void print(T t) {
 ////////////////////////////////////////////////////////////////////////////////
 /// 这里放OJ的类
 
+
 class Solution {
 public:
-    vector<string> letterCombinations(string digits) {
+    int strStr(string haystack, string needle) {
 
 
-        return {};
+        return -1;
     }
 };
-
 
 
 

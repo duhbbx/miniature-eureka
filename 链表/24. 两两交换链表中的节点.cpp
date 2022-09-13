@@ -15,8 +15,6 @@
 using namespace std;
 
 
-
-
 template<typename T>
 void print(T t) {
 
@@ -40,38 +38,73 @@ void print(T t) {
 /// 这里放OJ的类
 
 
+
 class Solution {
 public:
-    int maximumSwap(int num) {
-        string charArray = to_string(num);
-        int n = charArray.size();
-        int maxIdx = n - 1;
-        int idx1 = -1, idx2 = -1;
+    ListNode *swapPairs(ListNode *head) {
 
+        if (head == nullptr || head->next == nullptr) {
+            return head;
+        }
 
-        // 从最低位开始遍历
-        for (int i = n - 1; i >= 0; i--) {
-            if (charArray[i] > charArray[maxIdx]) {
-                maxIdx = i;
-            } else if (charArray[i] < charArray[maxIdx]) {
-                idx1 = i;
-                idx2 = maxIdx;
+        ListNode *newHead = head->next;
+        ListNode *tail = nullptr;
+
+        while (true) {
+            ListNode *p = head;
+            if (p == nullptr) break;
+            ListNode *q = p->next;
+            if (q == nullptr) break;
+
+            p->next = q->next;
+            q->next = p;
+
+            // 处理链表的时候 tail 需要注意
+            if (tail == nullptr) {
+                tail = p;
+            } else {
+                tail->next = q;
+                tail = p;
             }
+
+            head = p->next;
         }
 
-        if (idx1 >= 0) {
-            swap(charArray[idx1], charArray[idx2]);
-            return stoi(charArray);
-        } else {
-            return num;
-        }
+
+        return newHead;
     }
 };
 
-//作者：LeetCode-Solution
-//        链接：https://leetcode.cn/problems/maximum-swap/solution/zui-da-jiao-huan-by-leetcode-solution-lnd5/
-//来源：力扣（LeetCode）
-//著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+/*
+
+
+递归版本就是要比迭代慢啊
+
+ class Solution {
+public:
+    ListNode* swapPairs(ListNode* head) {
+
+        if (head == nullptr || head->next == nullptr) {
+            return head;
+        }
+
+        ListNode* p = head;
+        ListNode* q = head->next;
+        ListNode* tmp = q->next;
+
+        q->next = p;
+        p->next =swapPairs(tmp);
+
+        return q;
+    }
+};
+
+
+
+
+ */
+
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -81,12 +114,9 @@ public:
 void printCurrentFileName() {
     string file = __FILE__;
     int pos = file.find_last_of("/");
-    string fileName = pos == -1 ? file : file.substr(pos+1);
+    string fileName = pos == -1 ? file : file.substr(pos + 1);
     cout << "\n【当前题目为：" << fileName << "】" << endl;
 }
-
-
-
 
 
 int main() {
@@ -94,12 +124,16 @@ int main() {
 
     printCurrentFileName();
 
-    cout << INT_MAX << endl;
-
 
     Solution solution;
 
-    cout << solution.maximumSwap(10) << endl;
+
+    ListNode* list = ListNode::create({1, 2, 3, 4, 5});
+
+    list = solution.swapPairs(list);
+
+
+    list->print();
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/
 

@@ -1,3 +1,6 @@
+//
+// Created by duhbb on 2022/9/13.
+//
 #include <iostream>              // 输入输出
 #include <vector>                // 可变长度数组
 #include <unordered_map>         // hashmap
@@ -10,8 +13,6 @@
 #include "../0000 API 模板 类/ListNode.h"
 
 using namespace std;
-
-
 
 
 template<typename T>
@@ -36,14 +37,69 @@ void print(T t) {
 ////////////////////////////////////////////////////////////////////////////////
 /// 这里放OJ的类
 
+
+/*
+
 class Solution {
 public:
-    vector<string> letterCombinations(string digits) {
+    int removeDuplicates(vector<int> &nums) {
 
 
-        return {};
+        int n = nums.size();
+
+        if (n == 0 || n == 1) return n;
+
+        int index = 0, val = nums[0];
+
+        for (int i = 1; i < n; i++) {
+
+            if (nums[i] == val) {
+                continue;
+            } else {
+                nums[index + 1] = nums[i];
+
+                val = nums[i]; // val 要用新的值
+                ++index;       // index是自增而不是到 i
+            }
+
+        }
+
+
+        return index+1;
     }
 };
+
+ */
+
+
+class Solution {
+public:
+    int removeDuplicates(vector<int> &nums) {
+
+        int n = nums.size();
+        if (n == 0) return 0;
+
+        int p = 0;
+        int q = 1;
+
+        while(q < n) {
+            if (nums[p] != nums[q]) {
+                if (q - p > 1) {
+                    nums[p + 1] = nums[q];
+                }
+                p++;
+            }
+
+            q++;
+        }
+
+        return p + 1;
+    }
+
+};
+
+
+
 
 
 
@@ -56,12 +112,9 @@ public:
 void printCurrentFileName() {
     string file = __FILE__;
     int pos = file.find_last_of("/");
-    string fileName = pos == -1 ? file : file.substr(pos+1);
+    string fileName = pos == -1 ? file : file.substr(pos + 1);
     cout << "\n【当前题目为：" << fileName << "】" << endl;
 }
-
-
-
 
 
 int main() {

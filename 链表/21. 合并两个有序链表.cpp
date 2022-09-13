@@ -1,3 +1,6 @@
+//
+// Created by duhbb on 2022/9/13.
+//
 #include <iostream>              // 输入输出
 #include <vector>                // 可变长度数组
 #include <unordered_map>         // hashmap
@@ -36,15 +39,56 @@ void print(T t) {
 ////////////////////////////////////////////////////////////////////////////////
 /// 这里放OJ的类
 
+
+
 class Solution {
 public:
-    vector<string> letterCombinations(string digits) {
+    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
 
+        if (list1 == nullptr) return list2;
+        if (list2 == nullptr) return list1;
 
-        return {};
+        ListNode* p = nullptr;
+
+        if (list1->val < list2->val) {
+            p = list1;
+            list1 = list1->next;
+        } else {
+            p = list2;
+            list2 = list2->next;
+        }
+
+        ListNode* tail = p;
+        tail->next = nullptr;
+
+        while(true) {
+
+            if (list1 == nullptr) {
+                tail->next = list2;
+                break;
+            }
+
+            if (list2 == nullptr) {
+                tail->next = list1;
+                break;
+            }
+
+            if (list1->val < list2->val) {
+                tail->next = list1;
+                tail = tail->next;
+                list1 = list1->next;
+                tail->next = nullptr;
+            } else {
+                tail->next = list2;
+                tail = tail->next;
+                list2 = list2->next;
+                tail->next = nullptr;
+            }
+        }
+
+        return p;
     }
 };
-
 
 
 
@@ -69,8 +113,12 @@ int main() {
 
     printCurrentFileName();
 
-
     Solution solution;
+
+    ListNode*p = solution.mergeTwoLists(ListNode::create({1, 2 ,4}), ListNode::create({1, 3, 4}));
+
+
+    p->print();
 
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/

@@ -1,3 +1,6 @@
+//
+// Created by duhbb on 2022/9/13.
+//
 #include <iostream>              // 输入输出
 #include <vector>                // 可变长度数组
 #include <unordered_map>         // hashmap
@@ -8,6 +11,7 @@
 #include <algorithm>             // 算法相关的
 #include "../0000 API 模板 类/TreeNode.h"
 #include "../0000 API 模板 类/ListNode.h"
+#include <set>
 
 using namespace std;
 
@@ -36,14 +40,54 @@ void print(T t) {
 ////////////////////////////////////////////////////////////////////////////////
 /// 这里放OJ的类
 
+
+
 class Solution {
 public:
-    vector<string> letterCombinations(string digits) {
+    vector<string> generateParenthesis(int n) {
+
+        if (n == 0) return {};
+        if (n == 1) return {"()"};
+
+        vector<string> res;
+
+        set<string> myset;
 
 
-        return {};
+
+        string semifinished = "()";
+        backtrack(myset, 1, n, semifinished);
+
+
+        res.assign(myset.begin(), myset.end());
+        return res;
+    }
+
+    void backtrack(set<string>& myset, int index, int n, string& semifinished) {
+
+        if (index == n) {
+            myset.insert(semifinished);
+            return;
+        }
+
+        semifinished.push_back('(');
+        semifinished.push_back(')');
+
+        backtrack(myset, index + 1, n, semifinished);
+
+        semifinished.pop_back();
+        semifinished.pop_back();
+
+        semifinished = "(" + semifinished + ")";
+        backtrack(myset, index + 1, n, semifinished);
+        semifinished = semifinished.substr(1, semifinished.length() - 2);
+
+        semifinished = "()" + semifinished;
+        backtrack(myset, index + 1, n, semifinished);
+        semifinished = semifinished.substr(2);
     }
 };
+
 
 
 

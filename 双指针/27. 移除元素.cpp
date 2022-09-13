@@ -1,3 +1,6 @@
+//
+// Created by duhbb on 2022/9/13.
+//
 #include <iostream>              // 输入输出
 #include <vector>                // 可变长度数组
 #include <unordered_map>         // hashmap
@@ -38,13 +41,26 @@ void print(T t) {
 
 class Solution {
 public:
-    vector<string> letterCombinations(string digits) {
+    int removeElement(vector<int>& nums, int val) {
 
 
-        return {};
+
+        int n = nums.size();
+
+        int p = 0, q = n-1;
+
+        while(p <= q) {
+            if (nums[p] == val) {
+                nums[p] = nums[q];
+                q--;
+            } else {
+                p++;
+            }
+        }
+
+        return p;
     }
 };
-
 
 
 
