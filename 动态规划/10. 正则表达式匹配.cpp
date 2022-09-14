@@ -49,8 +49,49 @@ public:
      */
     bool isMatch(string s, string p) {
 
+        int length_of_s = s.length();
+        int length_of_p = p.length();
+        vector<vector<bool>> dp(length_of_s + 1, vector<bool>(length_of_p + 1, false));
 
-        return false;
+
+        // s 为空，p 也为空则可以匹配上
+        dp[0][0] = true;
+
+        // 第一列中 s 不为空，但是 p 为空，则肯定匹配不上
+        for (int i = 1; i < length_of_s + 1; ++i) {
+            dp[i][0] = false;
+        }
+
+        // 处理第一行
+        for (int j = 1; j < length_of_p + 1; ++j) {
+            if (p[j-1] == '.') {
+                dp[0][j] = false;
+            } else if (p[j-1] == '*') {
+                dp[0][j] = dp[0][j - 2];
+            }
+        }
+
+        for (int i = 1; i <= length_of_s; ++i) {
+            for (int j = 1; j <= length_of_p; ++j) {
+
+                // cout << "i = " << i << ", j = " << j << endl;
+
+                if (p[j-1] == '.') {   // p 能匹配任意单个字符
+                    dp[i][j] = dp[i-1][j-1];
+                } else if (p[j-1] == '*') { // p 为 * 号
+                    if (s[i-1] == p[j-2] || p[j-2] == '.')  {
+                        dp[i][j] = (dp[i-1][j] || dp[i][j-2]);
+                    } else {
+                        dp[i][j] = dp[i][j-2];
+                    }
+                } else if (s[i-1] == p[j-1]) {       // p 为具体的某个字符
+                    dp[i][j] = dp[i-1][j-1];
+                }
+            }
+        }
+
+
+        return dp[length_of_s][length_of_p];
     }
 };
 
@@ -75,6 +116,9 @@ int main() {
 
     printCurrentFileName();
 
+    Solution solution;
+
+    cout << "res = " << solution.isMatch("aab", "c*a*b") << endl;
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/
 

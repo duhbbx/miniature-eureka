@@ -1,5 +1,5 @@
 //
-// Created by duhbb on 2022/9/12.
+// Created by duhbb on 2022/9/14.
 //
 #include <iostream>              // 输入输出
 #include <vector>                // 可变长度数组
@@ -12,8 +12,9 @@
 #include "../0000 API 模板 类/TreeNode.h"
 #include "../0000 API 模板 类/ListNode.h"
 
-
 using namespace std;
+
+
 
 
 template<typename T>
@@ -40,38 +41,23 @@ void print(T t) {
 
 class Solution {
 public:
-    int romanToInt(string s) {
-
-        unordered_map<char, int> charMap = {
-                {'I', 1},
-                {'V', 5},
-                {'X', 10},
-                {'L', 50},
-                {'C', 100},
-                {'D', 500},
-                {'M', 1000},
-        };
-
-        int n = s.length();
-
-        if (n == 0) return 0;
-
-        int res = 0;
+    double trimMean(vector<int>& arr) {
+        int n = arr.size();
+        if (n == 0) return 0.0;
 
 
-        for (int i = 0; i < n; i++) {
-            if (i != n-1 && charMap[s[i]] < charMap[s[i+1]]) {
-                res -= charMap[s[i]];
-            } else {
-                res += charMap[s[i]];
-            }
+        sort(arr.begin(), arr.end());
+
+        int removeNum = n * 5 / 100;
+
+        int sum = 0;
+        for (int i = removeNum; i < n - removeNum; i++) {
+            sum += arr[i];
         }
 
-        return res;
+        return 1.0 * sum / (n - removeNum - removeNum);
     }
 };
-
-
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -81,15 +67,21 @@ public:
 void printCurrentFileName() {
     string file = __FILE__;
     int pos = file.find_last_of("/");
-    string fileName = pos == -1 ? file : file.substr(pos + 1);
+    string fileName = pos == -1 ? file : file.substr(pos+1);
     cout << "\n【当前题目为：" << fileName << "】" << endl;
 }
+
+
+
 
 
 int main() {
 
 
     printCurrentFileName();
+
+
+    Solution solution;
 
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/
