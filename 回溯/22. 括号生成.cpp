@@ -16,8 +16,6 @@
 using namespace std;
 
 
-
-
 template<typename T>
 void print(T t) {
 
@@ -45,46 +43,32 @@ void print(T t) {
 class Solution {
 public:
     vector<string> generateParenthesis(int n) {
-
-        if (n == 0) return {};
-        if (n == 1) return {"()"};
-
         vector<string> res;
-
-        set<string> myset;
-
-
-
-        string semifinished = "()";
-        backtrack(myset, 1, n, semifinished);
-
-
-        res.assign(myset.begin(), myset.end());
+        string parenthesis = "";
+        int leftParenthesis = 0;
+        int rightParenthesis = 0;
+        backtrack(res, parenthesis, leftParenthesis, rightParenthesis, n);
         return res;
     }
 
-    void backtrack(set<string>& myset, int index, int n, string& semifinished) {
-
-        if (index == n) {
-            myset.insert(semifinished);
+private:
+    void backtrack(vector<string> &res, string &parenthesis, int leftParenthesis, int rightParenthesis, int n) {
+        if (rightParenthesis == n) {
+            res.push_back(parenthesis);
             return;
         }
 
-        semifinished.push_back('(');
-        semifinished.push_back(')');
+        if (leftParenthesis < n) {
+            parenthesis.push_back('(');
+            backtrack(res, parenthesis, leftParenthesis + 1, rightParenthesis, n);
+            parenthesis.pop_back();
+        }
 
-        backtrack(myset, index + 1, n, semifinished);
-
-        semifinished.pop_back();
-        semifinished.pop_back();
-
-        semifinished = "(" + semifinished + ")";
-        backtrack(myset, index + 1, n, semifinished);
-        semifinished = semifinished.substr(1, semifinished.length() - 2);
-
-        semifinished = "()" + semifinished;
-        backtrack(myset, index + 1, n, semifinished);
-        semifinished = semifinished.substr(2);
+        if (rightParenthesis < leftParenthesis) {
+            parenthesis.push_back(')');
+            backtrack(res, parenthesis, leftParenthesis, rightParenthesis + 1, n);
+            parenthesis.pop_back();
+        }
     }
 };
 
@@ -100,12 +84,9 @@ public:
 void printCurrentFileName() {
     string file = __FILE__;
     int pos = file.find_last_of("/");
-    string fileName = pos == -1 ? file : file.substr(pos+1);
+    string fileName = pos == -1 ? file : file.substr(pos + 1);
     cout << "\n【当前题目为：" << fileName << "】" << endl;
 }
-
-
-
 
 
 int main() {
@@ -115,6 +96,8 @@ int main() {
 
 
     Solution solution;
+
+    solution.generateParenthesis(3);
 
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/
