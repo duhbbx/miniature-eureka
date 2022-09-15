@@ -8,5 +8,5 @@ set(CMAKE_CXX_STANDARD 14)
 # add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>") #使用utf-8文件编码
 
 
-add_executable(leetcode "未分类/231. 2 的幂.cpp")
+add_executable(leetcode "未分类/28. 找出字符串中第一个匹配项的下标.cpp")
 
