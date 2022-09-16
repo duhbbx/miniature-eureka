@@ -42,47 +42,36 @@ class Solution {
 public:
 
     vector<int> getNext(const string &needle) {
-
         int n = needle.length();
         vector<int> next(n, 0);
-
-
-        // [0, i] 就是当前要判断的字符串的长度
-        for (int i = 1; i < n; ++i) {
-            cout << "当前判断的字符串为: " << needle.substr(0, i + 1) << endl;
-
-            for (int j = 1; j <= i; ++j) {
-                int tmp = 0;
-                cout << "前缀: " << needle.substr(0, j) << ", 后缀：" << needle.substr(i + 1 - j, j) << endl;
-
-                for (int k = 0; k < j; ++k) {
-                    if (needle[k] == needle[i + 1 - j + k]) {
-                        tmp++;
-                    } else {
-                        break;
-                    }
-                }
-
-                if (tmp > next[i]) {
-                    next[i] = tmp;
-                }
-
+        next[0] = -1;
+        int i = 0, j = -1;
+        while(i < n - 1) {
+            if (j == -1 || needle[i] == needle[j]) {
+                ++i;
+                ++j;
+                next[i] = j;
+            } else {
+                j = next[j];
             }
-
         }
-
-
-        print(next);
-
         return next;
     }
 
     int strStr(string haystack, string needle) {
 
-        if (needle.length() == 0) return -1;
+        int i = 0, j = 0;
+        vector<int> next = getNext(needle);
+        while(i < (int) haystack.length() && j < (int) needle.length()) {
+            if (j == -1 || haystack[i] == needle[j]) {
+                ++i;
+                ++j;
+            } else {
+                j = next[j];
+            }
+        }
 
-
-        return -1;
+        return j == needle.length() ? i - j : -1;
     }
 };
 
@@ -109,7 +98,7 @@ int main() {
 
     Solution solution;
 
-    solution.getNext("ababaca");
+    solution.getNext("sad");
 
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/
