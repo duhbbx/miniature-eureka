@@ -1,5 +1,5 @@
 //
-// Created by tuhooo on 2022/9/17.
+// Created by duhbb on 2022/9/17.
 //
 #include <iostream>              // 输入输出
 #include <vector>                // 可变长度数组
@@ -41,56 +41,50 @@ void print(T t) {
 ////////////////////////////////////////////////////////////////////////////////
 /// 这里放OJ的类
 
-
 class Solution {
 public:
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
 
-    vector<int> recurse(vector<int>& nums, int begin, int end, int target) {
+        vector<vector<int>> res;
 
-        if (begin > end) return {-1, -1};
-        if (begin == end) {
-            if (nums[begin] != target) {
-                return {-1, -1};
-            } else {
-                return {begin, begin};
-            }
-        }
-
-        int l = begin;
-        int r = end;
-
-
-        while(l <= r) {
-            int mid = (l + r) >> 1;
-            if (nums[mid] < target) {
-                l = mid + 1;
-            } else if (nums[mid] == target) {
-                vector<int> resLeft = recurse(nums, begin, mid - 1, target);
-                vector<int> resRight = recurse(nums, mid + 1, end, target);
-
-                vector<int> res(2, mid);
-                if (resLeft[0] != -1) {
-                    res[0] = resLeft[0];
-                }
-                if (resRight[1] != -1) {
-                    res[1] = resRight[1];
-                }
-                return res;
-            } else {
-                r = mid - 1;
-            }
-        }
-
-        return {-1, -1};
+        vector<int> item;
+        vector<int> flagArray(nums.size(), 0);
+        set<string> setForNonrepeat;
+        backtrack(res, item, flagArray, nums, setForNonrepeat);
+        return res;
     }
 
+    string vector2String(vector<int>& item) {
+        string s;
 
+        for(int i : item) {
+            s += (char) ('0' + i);
+        }
+        return s;
+    }
 
-    vector<int> searchRange(vector<int>& nums, int target) {
-        return recurse(nums, 0, nums.size()-1, target);
+    void backtrack(vector<vector<int>>& res, vector<int>& item, vector<int>& flagArray, vector<int> nums, set<string>& setForNonrepeat) {
+
+        if (item.size() == nums.size()) {
+            string s = vector2String(item);
+            if (setForNonrepeat.find(s) == setForNonrepeat.end()) {
+                res.push_back(item);
+                setForNonrepeat.insert(s);
+            }
+            return;
+        }
+
+        for (int i = 0; i < nums.size(); i++) {
+            if (flagArray[i] == 0) {
+                flagArray[i] = 1;
+                item.push_back(nums[i]);
+                backtrack(res, item, flagArray, nums, setForNonrepeat);
+                flagArray[i] = 0;
+                item.pop_back();
+            }
+        }
     }
 };
-
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -115,11 +109,7 @@ int main() {
     printCurrentFileName();
 
 
-    vector<int> nums = {5, 7, 7, 8, 8, 10};
-
     Solution solution;
-
-    solution.searchRange(nums, 7);
 
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/
