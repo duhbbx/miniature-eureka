@@ -47,6 +47,25 @@ class Solution {
 public:
     int kSimilarity(string s1, string s2) {
 
+        queue<pair<string, int>> qu;    // 广度优先搜索的队列
+        qu.emplace(s1, 0);              // 先将根节点入列
+
+
+        while(!qu.empty()) {
+            int n = qu.size();
+
+            for (int i = 0; i < n; ++i) {
+
+                // 判断当前中间状态的 s1' 和 s2 是否相等, 如果相等直接返回就行
+
+                // 弹出队头
+
+                // for循环找到子节点
+
+                // 将子节点入列
+            }
+        }
+
 
 
 
