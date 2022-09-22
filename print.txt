@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int kSimilarity(string s1, string s2) {
+        queue<pair<string, int>> qu;
+        qu.emplace(s1, 0);
+        unordered_set<string> visited;
+
+        int step = 0;
+        while (!qu.empty()) {
+            int n = qu.size();
+            for (int i = 0; i < n; ++i) {
+                auto [curr_s1, pos] = qu.front();
+                if (curr_s1 == s2) return step;
+                qu.pop();
+
+
+                for (int j = pos; j < curr_s1.length(); ++j) {
+                    if (curr_s1[j] == s2[j]) continue;
+
+                    for (int k = j + 1; k < curr_s1.length(); ++k) {
+                        if (curr_s1[k] != s2[k] && s2[j] == curr_s1[k]) {
+                            swap(curr_s1[j], curr_s1[k]);
+
+                            if (visited.find(curr_s1) == visited.end()) {
+                                visited.insert(curr_s1);
+                                qu.emplace(curr_s1, j + 1);
+                            }
+
+                            swap(curr_s1[j], curr_s1[k]);
+                        }
+                    }
+
+                    break;
+                }
+            }
+            ++step;
+        }
+        return step;
+    }
+};

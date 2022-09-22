@@ -18,8 +18,6 @@
 using namespace std;
 
 
-
-
 template<typename T>
 void print(T t) {
 
@@ -46,37 +44,41 @@ void print(T t) {
 class Solution {
 public:
     int kSimilarity(string s1, string s2) {
-
         queue<pair<string, int>> qu;    // 广度优先搜索的队列
         qu.emplace(s1, 0);              // 先将根节点入列
+        unordered_set<string> visited;  // 判断字符串之前是否已经处理过了
 
-
-        while(!qu.empty()) {
+        int step = 0;
+        while (!qu.empty()) {
             int n = qu.size();
-
             for (int i = 0; i < n; ++i) {
+                auto [curr_s1, pos] = qu.front();
+                if (curr_s1 == s2) return step;
+                qu.pop();
 
-                // 判断当前中间状态的 s1' 和 s2 是否相等, 如果相等直接返回就行
 
-                // 弹出队头
+                for (int j = pos; j < curr_s1.length(); ++j) {
+                    if (curr_s1[j] == s2[j]) continue;
 
-                // for循环找到子节点
+                    for (int k = j + 1; k < curr_s1.length(); ++k) {
+                        if (curr_s1[k] != s2[k] && s2[j] == curr_s1[k]) {
+                            swap(curr_s1[j], curr_s1[k]);
 
-                // 将子节点入列
+                            if (visited.find(curr_s1) == visited.end()) {
+                                visited.insert(curr_s1);
+                                qu.emplace(curr_s1, j + 1);
+                            }
+
+                            swap(curr_s1[j], curr_s1[k]);
+                        }
+                    }
+
+                    break;
+                }
             }
+            ++step;
         }
-
-
-
-
-
-
-
-
-
-
-
-        return 0;
+        return step;
     }
 };
 
@@ -89,12 +91,9 @@ public:
 void printCurrentFileName() {
     string file = __FILE__;
     int pos = file.find_last_of("/");
-    string fileName = pos == -1 ? file : file.substr(pos+1);
+    string fileName = pos == -1 ? file : file.substr(pos + 1);
     cout << "\n【当前题目为：" << fileName << "】" << endl;
 }
-
-
-
 
 
 int main() {
@@ -104,6 +103,8 @@ int main() {
 
 
     Solution solution;
+
+    solution.kSimilarity("ab", "ba");
 
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/
