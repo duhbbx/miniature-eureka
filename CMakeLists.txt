@@ -8,5 +8,5 @@ set(CMAKE_CXX_STANDARD 17)
 # add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>") #使用utf-8文件编码
 
 
-add_executable(leetcode  "未分类/854. 相似度为 K 的字符串.cpp" "图/997. 找到小镇的法官.cpp" "图/1971. 寻找图中是否存在路径.cpp")
+add_executable(leetcode "图/684. 冗余连接.cpp")
 

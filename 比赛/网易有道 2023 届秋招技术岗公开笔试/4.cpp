@@ -1,20 +1,17 @@
 //
-// Created by tuhooo on 2022/9/23.
+// Created by duhbb on 2022/9/17.
 //
-
-
 #include <iostream>              // 输入输出
 #include <vector>                // 可变长度数组
 #include <unordered_map>         // hashmap
-#include <unordered_set>         // 无序集合
 #include <stack>                 // 栈
 #include <string>                // 字符串
 #include <queue>                 // 队列
 #include <climits>               // 极限值
 #include <algorithm>             // 算法相关的
 #include <set>                   // 集合
-#include "../0000 API 模板 类/TreeNode.h"
-#include "../0000 API 模板 类/ListNode.h"
+#include "../../0000 API 模板 类/TreeNode.h"
+#include "../../0000 API 模板 类/ListNode.h"
 
 
 using namespace std;
@@ -42,45 +39,40 @@ void print(T t) {
 ////////////////////////////////////////////////////////////////////////////////
 /// 这里放OJ的类
 
-
-
-#define MAXN 5005
 class Solution {
 public:
 
-    int fa[MAXN];
-    int rank[MAXN];
+    int toIndex(string &s) {
+        vector<int> month2Day = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        int month = stoi(s.substr(0, 2));
+        int day = stoi(s.substr(3, 2));
+        int sum = 0;
 
-    inline void init(int n) {
-        for (int i = 0; i < n; ++i) {
-            fa[i] = i;
-            rank[i] = 1;
+        for (int i = 1; i < month; ++i) {
+            sum += month2Day[i - 1];
         }
+        return sum + day;
     }
 
-    int find(int x) {
-        return x == fa[x] ? x : (fa[x] = find(fa[x]));
-    }
+    int countDaysTogether(string arriveAlice, string leaveAlice, string arriveBob, string leaveBob) {
 
-    inline void merge(int i, int j) {
-        int x = find(i), y = find(j);
-        if (rank[x] <= rank[y])
-            fa[x] = y;
-        else
-            fa[y] = x;
-        if (rank[x] == rank[y] && x != y)
-            rank[y]++;
-    }
+        int arriveAliceInt = toIndex(arriveAlice);
+        int leaveAliceInt = toIndex(leaveAlice);
+        int arriveBobInt = toIndex(arriveBob);
+        int leaveBobInt = toIndex(leaveBob);
 
-    bool validPath(int n, vector<vector<int>> &edges, int source, int destination) {
-        init(n);
-        for (auto& o : edges) {
-            merge(o[0], o[1]);
+
+        if (leaveAliceInt < arriveBobInt || leaveBobInt < arriveAliceInt) {
+            return 0;
         }
 
-        return find(source) == find(destination);
+
+        return min(leaveAliceInt, leaveBobInt) - max(arriveAliceInt, arriveBobInt) + 1;
+
+
     }
 };
+
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -102,6 +94,8 @@ int main() {
 
 
     Solution solution;
+
+    cout << solution.countDaysTogether("08-15", "08-18","08-16", "08-19" ) << endl;
 
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/

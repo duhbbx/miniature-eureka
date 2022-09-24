@@ -1,4 +1,7 @@
 //
+// Created by duhbb on 2022/9/24.
+//
+//
 // Created by tuhooo on 2022/9/23.
 //
 
@@ -44,7 +47,7 @@ void print(T t) {
 
 
 
-#define MAXN 5005
+#define MAXN 200
 class Solution {
 public:
 
@@ -72,13 +75,27 @@ public:
             rank[y]++;
     }
 
-    bool validPath(int n, vector<vector<int>> &edges, int source, int destination) {
-        init(n);
-        for (auto& o : edges) {
-            merge(o[0], o[1]);
+    int findCircleNum(vector<vector<int>>& isConnected) {
+
+        init(isConnected.size());
+
+        for (int i = 0; i < isConnected.size() - 1; ++i) {
+            for (int j = i + 1; j < isConnected.size(); ++j) {
+                if (isConnected[i][j] == 1) {
+                    merge(i, j);
+                }
+            }
         }
 
-        return find(source) == find(destination);
+        int res = 0;
+
+        for (int i = 0; i < isConnected.size(); i++) {
+            if (find(i) == i) {
+                ++res;
+            }
+        }
+
+        return res;
     }
 };
 
