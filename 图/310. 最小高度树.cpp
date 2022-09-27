@@ -20,8 +20,6 @@
 using namespace std;
 
 
-
-
 template<typename T>
 void print(T t) {
 
@@ -42,7 +40,7 @@ void print(T t) {
 void printCurrentFileName() {
     string file = __FILE__;
     int pos = file.find_last_of("/");
-    string fileName = pos == -1 ? file : file.substr(pos+1);
+    string fileName = pos == -1 ? file : file.substr(pos + 1);
     cout << "\n【当前题目为：" << fileName << "】" << endl;
 }
 
@@ -55,65 +53,60 @@ void printCurrentFileName() {
 
 class Solution {
 public:
-    vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
+    int findLongestNode(int u, vector<int> &parent, vector<vector<int>> &adj) {
+        int n = adj.size();
+        queue<int> qu;
+        vector<bool> visit(n);              // 标记是否访问的话不用用 unordered_set
+        qu.emplace(u);
+        visit[u] = true;
+        int node = -1;
 
-        vector<int> res;
+        while (!qu.empty()) {
+            int curr = qu.front();          // 队列最前面的一个
+            qu.pop();                       // 弹出
+            node = curr;                    // node为当前节点
+            for (auto &v: adj[curr]) {      // 遍历 curr 的邻接点
+                if (!visit[v]) {            // 如果还没访问就可以加进来
+                    visit[v] = true;
+                    parent[v] = curr;
+                    qu.emplace(v);
+                }
+            }
+        }
+        return node;
+    }
 
+    vector<int> findMinHeightTrees(int n, vector<vector<int>> &edges) {
         if (n == 1) {
-            res.push_back(0);
-            return res;
+            return {0};
+        }
+        vector<vector<int>> adj(n);
+        for (auto &edge: edges) {
+            adj[edge[0]].emplace_back(edge[1]);
+            adj[edge[1]].emplace_back(edge[0]);
         }
 
-
-        vector<vector<int>> g(n, vector<int>(n, (int) 1e9+5));
-
-        for (auto& e : edges) {
-            g[e[0]][e[1]] = 1;
-            g[e[1]][e[0]] = 1;
+        vector<int> parent(n, -1);
+        /* 找到与节点 0 最远的节点 x */
+        int x = findLongestNode(0, parent, adj);
+        /* 找到与节点 x 最远的节点 y */
+        int y = findLongestNode(x, parent, adj);
+        /* 求出节点 x 到节点 y 的路径 */
+        vector<int> path;
+        parent[x] = -1;
+        while (y != -1) {
+            path.emplace_back(y);
+            y = parent[y];
         }
-
-
-
-        for (int k = 0; k < n; k++) {
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < n; j++) {
-                    g[i][j] = min(g[i][j], g[i][k] + g[k][j]);
-                }
-            }
+        int m = path.size();
+        if (m % 2 == 0) {
+            return {path[m / 2 - 1], path[m / 2]};
+        } else {
+            return {path[m / 2]};
         }
-
-        unordered_map<int, int> m;
-
-        for (int i = 0; i < n - 1; ++i) {
-            for (int j = i + 1; j < n; ++j) {
-                if (g[i][j] > m[i]) {
-                    m[i] = g[i][j];
-                }
-
-                if (g[i][j] > m[j]) {
-                    m[j] = g[i][j];
-                }
-            }
-        }
-
-        int minimum = INT_MAX;
-        for (auto& p : m) {
-            if (p.second < minimum) {
-                minimum = p.second;
-            }
-        }
-
-
-        for (auto& p : m) {
-            if (p.second == minimum) {
-                res.push_back(p.first);
-            }
-        }
-
-        return res;
-
     }
 };
+
 
 ////////////////////////////////////////////////////////////////////////////////
 
