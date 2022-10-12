@@ -55,7 +55,7 @@ void printCurrentFileName() {
 
 class Solution {
 public:
-    vector<string> letterCombinations(string digits) {
+    vector<int> findRedundantDirectedConnection(vector<vector<int>>& edges) {
 
 
         return {};

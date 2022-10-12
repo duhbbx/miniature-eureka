@@ -9,6 +9,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 
 
-add_executable(leetcode "未分类/870. 优势洗牌.cpp")
+add_executable(leetcode "图/685. 冗余连接 II.cpp")
+
 
 
