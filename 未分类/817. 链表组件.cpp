@@ -1,3 +1,8 @@
+//
+// Created by tuhooo on 2022/10/12.
+//
+
+
 #include <iostream>              // 输入输出
 #include <vector>                // 可变长度数组
 #include <unordered_map>         // hashmap
@@ -15,8 +20,6 @@
 
 
 using namespace std;
-
-
 
 
 template<typename T>
@@ -39,7 +42,7 @@ void print(T t) {
 void printCurrentFileName() {
     string file = __FILE__;
     int pos = file.find_last_of("/");
-    string fileName = pos == -1 ? file : file.substr(pos+1);
+    string fileName = pos == -1 ? file : file.substr(pos + 1);
     cout << "\n【当前题目为：" << fileName << "】" << endl;
 }
 
@@ -51,10 +54,33 @@ void printCurrentFileName() {
 
 class Solution {
 public:
-    vector<string> letterCombinations(string digits) {
+    int numComponents(ListNode *head, vector<int> &nums) {
 
+        if (nums.size() == 0) return 0;
+        if (head == nullptr) return 0;
 
-        return {};
+        unordered_set<int> s;
+        for (auto &i: nums) {
+            s.emplace(i);
+        }
+
+        ListNode *p = head;
+        int res = 0;
+        int flag = 0;
+        while (p) {
+
+            if (s.find(p->val) == s.end()) {
+                flag = 0;
+            } else {
+                if (flag == 0) {
+                    ++res;
+                    flag = 1;
+                }
+            }
+            p = p->next;
+        }
+
+        return res;
     }
 };
 

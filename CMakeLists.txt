@@ -10,5 +10,9 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(leetcode "图/685. 冗余连接 II.cpp")
 
+<<<<<<< HEAD
+=======
+add_executable(leetcode  "未分类/817. 链表组件.cpp")
+>>>>>>> a51d4df (这几天做的每日一题)
 
 
