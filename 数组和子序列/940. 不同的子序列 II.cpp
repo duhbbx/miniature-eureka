@@ -1,3 +1,6 @@
+//
+// Created by tuhooo on 2022/10/14.
+//
 #include <iostream>              // 输入输出
 #include <vector>                // 可变长度数组
 #include <unordered_map>         // hashmap
@@ -50,14 +53,35 @@ void printCurrentFileName() {
 ////////////////////////////////////////////////////////////////////////////////
 /// 这里放OJ的类
 
+
+#define MOD 1000000007
+#define N 2000
+
+
+
 class Solution {
 public:
-    vector<string> letterCombinations(string digits) {
+    int distinctSubseqII(string s) {
+
+        int dp[N];      // 用于动态规划的
+        memset(dp, 0, sizeof(dp));  // 将值都设置为 0
+        long long m[26];      // 记录以某个字母结尾的子序列个数
+        memset(m, 0, sizeof(m));
+
+        long long sum = 0;
 
 
-        return {};
+        for (int i = 0; i < s.length(); ++i) {
+            long long tmp = m[s[i]-'a'];
+            m[s[i] - 'a'] = sum + 1;
+            sum += (sum + 1 - tmp) % MOD;
+        }
+
+        return sum % MOD;
     }
 };
+
+
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -68,6 +92,8 @@ int main() {
 
 
     Solution solution;
+
+    solution.distinctSubseqII("aaa");
 
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/
