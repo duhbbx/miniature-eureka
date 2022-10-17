@@ -12,6 +12,5 @@ set(CMAKE_CXX_STANDARD 17)
 add_executable(
         leetcode
 
-        "图/886. 可能的二分法.cpp"
-)
+        "未分类/902. 最大为 N 的数字组合.cpp")
 
