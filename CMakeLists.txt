@@ -9,6 +9,4 @@ set(CMAKE_CXX_STANDARD 17)
 
 
 add_executable(leetcode
-
-               "图/765. 情侣牵手.cpp"
-               )
+               "未分类/1. Two Sum.cpp")
