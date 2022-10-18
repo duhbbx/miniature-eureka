@@ -57,11 +57,12 @@ class Solution {
 public:
     int atMostNGivenDigitSet(const vector<string> &digits, int n) {
 
+        int m = n;
         vector<int> bits_of_n;
-        while (n) {
-            int rem = n % 10;
+        while (m) {
+            int rem = m % 10;
             bits_of_n.push_back(rem);
-            n = (n - rem) / 10;
+            m = (m - rem) / 10;
         }
 
         int bits_num = bits_of_n.size();
@@ -69,70 +70,136 @@ public:
         vector<char> biggest(bits_num, ' ');
 
 
-        const auto &dfs = [&](auto &&self, int first, int start,
-                              int digits_index) -> void {
+        const auto &dfs = [&](auto &&self, int first, int start, int last_digits_index, int digits_index) -> void {
             if (first == -1) {  // 如果已经遍历到了最后一位则退出
                 return;
             }
 
-
             if (first == start) {   // 如果是第一位的话, 可能存在轮空的情况
-
                 int j = digits_index;
                 for (; j >= 0; --j) {
-
-                    if (digits[j][0] - '0' <= bits_of_n[first]) {    // 选择小于 n 的当前位的最大的一个数字
+                    biggest[first] = digits[j][0];
+                    if (lessEqual(biggest, n)) {    // 选择小于 n 的当前位的最大的一个数字
                         biggest[first] = digits[j][0];
-                        digits_index = j;   // 记住此位的当前位置
+                        last_digits_index = j;   // 记住此位的当前位置
                         break;
                     }
+
+                    biggest[first] = ' ';
                 }
 
                 if (j == -1) {
                     biggest[first] = ' ';
                 }
 
-                self(self, first-1, start, digits.size()-1);
-
+                self(self, first - 1, start, last_digits_index, digits.size() - 1);
             } else {
                 if (biggest[first + 1] == ' ') {    // 如果前一位轮空了
-
                     for (int k = first; k >= 0; --k) {
-                        biggest[k] = digits[digits.size()-1][0];
+                        biggest[k] = digits[digits.size() - 1][0];
                     }
-
-                    self(self, -1, -1, -1);
-
+                    self(self, -1, -1, -1, -1);
                 } else {
-
                     int j = digits_index;
                     for (; j >= 0; --j) {
-                        if (digits[j][0] - '0' <= bits_of_n[first]) {    // 选择小于 n 的当前位的最大的一个数字
+                        biggest[first] = digits[j][0];
+                        if (lessEqual(biggest, n)) {    // 选择小于 n 的当前位的最大的一个数字
                             biggest[first] = digits[j][0];
-                            digits_index = j;   // 记住此位的当前位置
-                            self(self, first-1, start, digits.size()-1);
+                            last_digits_index = j;   // 记住此位的当前位置
+                            self(self, first - 1, start, last_digits_index, digits.size() - 1);
                             break;
                         }
+                        biggest[first] = ' ';
                     }
-
                     if (j == -1) {
-                        self(self, first + 1, start, digits_index - 1);
+                        self(self, first + 1, start, last_digits_index - 1, last_digits_index - 1);
                     }
                 }
             }
         };
 
-        dfs(dfs, bits_num - 1, bits_num - 1, digits.size()-1);
+        dfs(dfs, bits_num - 1, bits_num - 1, -1, digits.size() - 1);
 
         print(biggest);
 
 
+        unordered_map<char, int> map;
 
-        return 0;
+
+        for (int i = 0; i < digits.size(); ++i) {
+            map[digits[i][0]] = i;
+        }
+
+
+
+        int single = 0;
+        int bigggxx = biggest_num(biggest);
+
+        for (int i = 0; i < digits.size(); ++i) {
+            if (digits[i][0] - '0' <= bigggxx) {
+                single++;
+            }
+        }
+
+
+        vector<int> sum(bits_num, 0);
+
+        sum[0] = map[biggest[0]] + 1;
+
+
+        for (int i = 1; i < biggest.size(); ++i) {
+            if (biggest[i] == ' ') {
+                break;
+            } else {
+                int tmp = sum[i-1];
+
+                int base = 1;
+
+                for (int j = 0; j < i; ++j) {
+                    base *= digits.size();
+                }
+
+                sum[i] = tmp + (map[biggest[i]]) * base;
+            }
+        }
+
+        int res = 0;
+        for (int i =1; i < bits_num; ++i) {
+            res += sum[i];
+        }
+
+        res += single;
+
+        cout << "res = " << res << endl;
+
+
+        return res;
     };
 
+    int biggest_num(vector<char> &biggest) {
+
+        int base = 1;
+        long long sum = 0;
+        for (int i = 0; i < biggest.size(); ++i) {
+            sum += base * (biggest[i] == ' ' ? 0 : biggest[i] - '0');
+            base *= 10;
+        }
+
+        return sum;
+    }
 
 
+    bool lessEqual(vector<char> &biggest, int n) {
+
+        int base = 1;
+        long long sum = 0;
+        for (int i = 0; i < biggest.size(); ++i) {
+            sum += base * (biggest[i] == ' ' ? 0 : biggest[i] - '0');
+            base *= 10;
+        }
+
+        return sum <= n;
+    }
 
 
 };
@@ -148,7 +215,7 @@ int main() {
 
     Solution solution;
 
-    solution.atMostNGivenDigitSet({"3", "5", "7"}, 3000);
+    solution.atMostNGivenDigitSet({"1", "2", "3", "6", "7", "8"}, 211);
 
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/
