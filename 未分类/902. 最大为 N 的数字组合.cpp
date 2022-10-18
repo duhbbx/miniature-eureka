@@ -54,14 +54,30 @@ void printCurrentFileName() {
 ////////////////////////////////////////////////////////////////////////////////
 /// 这里放OJ的类
 
+
 class Solution {
 public:
-    vector<string> letterCombinations(string digits) {
+    int atMostNGivenDigitSet(vector<string>& digits, int n) {
+
+        vector<int> bits_of_n;
+        while(n) {
+            int rem = n % 10;
+            bits_of_n.push_back(rem);
+            n = (n - rem) / 10;
+        }
+
+        // 找到小于给定数的最大数
 
 
-        return {};
+        // 对找到的数计算总的组合数
+
+
+
+        return 0;
+
     }
 };
+
 
 ////////////////////////////////////////////////////////////////////////////////
 
