@@ -120,88 +120,30 @@ public:
 
         dfs(dfs, bits_num - 1, bits_num - 1, -1, digits.size() - 1);
 
-        print(biggest);
-
-
         unordered_map<char, int> map;
-
-
         for (int i = 0; i < digits.size(); ++i) {
             map[digits[i][0]] = i;
         }
 
-
-
-        int single = 0;
-        int bigggxx = biggest_num(biggest);
-
-        for (int i = 0; i < digits.size(); ++i) {
-            if (digits[i][0] - '0' <= bigggxx) {
-                single++;
-            }
-        }
-
-
-        vector<int> sum(bits_num, 0);
-
-        sum[0] = map[biggest[0]] + 1;
-
-
-        for (int i = 1; i < biggest.size(); ++i) {
-            if (biggest[i] == ' ') {
-                break;
-            } else {
-                int tmp = sum[i-1];
-
-                int base = 1;
-
-                for (int j = 0; j < i; ++j) {
-                    base *= digits.size();
-                }
-
-                sum[i] = tmp + (map[biggest[i]]) * base;
-            }
-        }
-
         int res = 0;
-        for (int i =1; i < bits_num; ++i) {
-            res += sum[i];
+
+        // 这个for循环是我从题解里面抄的
+        for (int i = biggest.size() - 1; i >= 0; --i) {
+            if (biggest[i] == ' ') continue;
+            res = res * digits.size() + (map[biggest[i]] + 1);
         }
-
-        res += single;
-
-        cout << "res = " << res << endl;
-
-
         return res;
     };
 
-    int biggest_num(vector<char> &biggest) {
-
-        int base = 1;
-        long long sum = 0;
-        for (int i = 0; i < biggest.size(); ++i) {
-            sum += base * (biggest[i] == ' ' ? 0 : biggest[i] - '0');
-            base *= 10;
-        }
-
-        return sum;
-    }
-
-
     bool lessEqual(vector<char> &biggest, int n) {
-
         int base = 1;
         long long sum = 0;
         for (int i = 0; i < biggest.size(); ++i) {
             sum += base * (biggest[i] == ' ' ? 0 : biggest[i] - '0');
             base *= 10;
         }
-
         return sum <= n;
     }
-
-
 };
 
 
@@ -215,7 +157,9 @@ int main() {
 
     Solution solution;
 
-    solution.atMostNGivenDigitSet({"1", "2", "3", "6", "7", "8"}, 211);
+    // solution.atMostNGivenDigitSet({"1", "2", "3", "6", "7", "8"}, 211);
+    // solution.atMostNGivenDigitSet({"1",  "3", "5", "7"}, 100);
+    solution.atMostNGivenDigitSet({"5", "7", "8"}, 59);
 
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/
