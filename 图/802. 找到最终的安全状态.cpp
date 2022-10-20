@@ -21,44 +21,59 @@
 using namespace std;
 
 
-
-
 class Solution {
 public:
-    vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
+    vector<int> eventualSafeNodes(vector<vector<int>> &graph) {
 
         int n = graph.size();
 
-        queue<int>q;
+        queue<int> q;
 
 
-        vector<vector<int>> out;
+        vector<vector<int>> out(n, vector<int>());
 
+        vector<int> inDegree(n, 0);
 
 
         for (int i = 0; i < n; ++i) {
-            if (graph[i].size()==0) {
-                q.push(i);
+            if (graph[i].size() == 0) {
+                q.push(i);      // 入度为0的入列
             } else {
                 for (int j = 0; j < graph[i].size(); ++j) {
-                    out[graph[i][j]].push_back(i);
+                    out[graph[i][j]].push_back(i);  // 记录节点的出度
                 }
             }
+            inDegree[i] = graph[i].size();
         }
 
 
-        while(!q.empty()) {
+        vector<int> res;
+
+        while (!q.empty()) {
             int len = q.size();
 
             for (int i = 0; i < len; ++i) {
 
+                int currVertex = q.front();
+                q.pop();
+
+                for (int j = 0; j < out[currVertex].size(); ++j) {
+                    int adjacentVertex = out[currVertex][j];
+                    --inDegree[adjacentVertex];
+
+                    if (inDegree[adjacentVertex] == 0) {
+                        q.push(adjacentVertex);
+                    }
+                }
             }
-
-
         }
 
-
-
+        for (int i = 0; i < n; ++i) {
+            if (inDegree[i] == 0) {
+                res.push_back(i);
+            }
+        }
+        return res;
 
     }
 };
@@ -67,6 +82,15 @@ int main() {
 
 
     Solution solution;
+
+    vector<vector<int>> graph = {{1, 2},
+                                 {2, 3},
+                                 {5},
+                                 {0},
+                                 {5},
+                                 {},
+                                 {}};
+    solution.eventualSafeNodes(graph);
 
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/
