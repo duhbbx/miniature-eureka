@@ -1,3 +1,7 @@
+//
+// Created by tuhooo on 2022/10/20.
+//
+
 #include <iostream>              // 输入输出
 #include <vector>                // 可变长度数组
 #include <unordered_map>         // hashmap
@@ -18,13 +22,29 @@
 using namespace std;
 
 
-
-
 class Solution {
 public:
+    int kthGrammar(int n, int k) {
 
+        vector<int> path;   // 从最底层爬到顶点的路径
+        int p = k;  // 记录当前位置
 
+        while(p) {
+            path.push_back(p % 2 ? 1 : 0);
+            p >>= 1;
+        }
 
+        int top = 0;
+        for (int i = path.size()-1; i >= 0; --i) {
+            if (top == 0) {
+                top = path[i] ? 1 : 0;
+            } else {
+                top = path[i] ? 0 : 1;
+            }
+        }
+
+        return top;
+    }
 };
 
 

@@ -11,7 +11,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(
         leetcode
-        "图/797. 所有可能的路径[深度优先].cpp"
 
+
+        "图/802. 找到最终的安全状态.cpp"
 )
 

@@ -1,3 +1,6 @@
+//
+// Created by tuhooo on 2022/10/20.
+//
 #include <iostream>              // 输入输出
 #include <vector>                // 可变长度数组
 #include <unordered_map>         // hashmap
@@ -22,11 +25,43 @@ using namespace std;
 
 class Solution {
 public:
+    vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
+
+        int n = graph.size();
+
+        queue<int>q;
+
+
+        vector<vector<int>> out;
 
 
 
+        for (int i = 0; i < n; ++i) {
+            if (graph[i].size()==0) {
+                q.push(i);
+            } else {
+                for (int j = 0; j < graph[i].size(); ++j) {
+                    out[graph[i][j]].push_back(i);
+                }
+            }
+        }
+
+
+        while(!q.empty()) {
+            int len = q.size();
+
+            for (int i = 0; i < len; ++i) {
+
+            }
+
+
+        }
+
+
+
+
+    }
 };
-
 
 int main() {
 
