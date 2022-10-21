@@ -11,8 +11,5 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(
         leetcode
-
-
-        "图/802. 找到最终的安全状态.cpp"
-)
+        "图/834. 树中距离之和.cpp")
 
