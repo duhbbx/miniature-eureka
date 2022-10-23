@@ -11,5 +11,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(
         leetcode
-        "图/834. 树中距离之和.cpp")
+      "图/841. 钥匙和房间.cpp"
+
+)
 
