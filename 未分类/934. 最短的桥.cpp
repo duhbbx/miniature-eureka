@@ -24,72 +24,81 @@
 using namespace std;
 
 
-
 int s[10000];
+
+#define X(i) (i / (int) grid.size())
+#define Y(i) (i % (int) grid.size())
 
 
 class Solution {
 public:
 
     int find(int x) {
-        if (s[x] == x) {
-            return x;
-        } else {
-            s[x] = find(s[x]);
-            return s[x];
-        }
+        return x == s[x] ? x : (s[x] = find(s[x]));
     }
 
     void merge(int x, int y) {
-        s[x] = find(y);
+        int i = find(x), j = find(y);
+        if (i != j) {
+            s[i] = j;
+        }
     }
 
 
-    int shortestBridge(vector<vector<int>>& grid) {
+    int shortestBridge(vector<vector<int>> &grid) {
 
         memset(s, 0, sizeof(s));    // 将s清空
         for (int i = 0; i < grid.size() * grid.size(); ++i) {
-            s[i] = i;
+            if (grid[X(i)][Y(i)] == 0) {
+                s[i] = -1;
+            } else {
+                s[i] = i;
+            }
+
         }
 
         for (int i = 0; i < grid.size(); ++i) {
             for (int j = 0; j < grid.size(); ++j) {
-                if (grid[i][j] ==  0) {
+                if (grid[i][j] == 0) {
                     continue;
                 } else {
-                    if (j > 0 && grid[i][j-1] == 1) {
-                        merge(i*grid.size()+j, i*grid.size()+j-1);
+                    if (j > 0 && grid[i][j - 1] == 1) {
+                        merge(i * grid.size() + j, i * grid.size() + j - 1);
                     }
-                    if (j < grid.size()-1 && grid[i][j+1] == 1) {
-                        merge(i*grid.size()+j, i*grid.size()+j +1);
+                    if (j < grid.size() - 1 && grid[i][j + 1] == 1) {
+                        merge(i * grid.size() + j, i * grid.size() + j + 1);
                     }
 
-                    if (i < grid.size()-1 &&  grid[i+1][j] == 1) {
-                        merge(i*grid.size() + j, (i+1)*grid.size() + j);
+                    if (i < grid.size() - 1 && grid[i + 1][j] == 1) {
+                        merge(i * grid.size() + j, (i + 1) * grid.size() + j);
                     }
                 }
             }
         }
 
 
-
-        for (int i = 0; i < grid.size() * grid.size(); ++i) {
-            cout << "i = " << s[i] << endl;
-        }
-
         int res = 10000;
         for (int i = 0; i < grid.size() * grid.size(); ++i) {
-            for (int j = 0; j < grid.size() * grid.size(); ++j) {
 
-                if (grid[i/(int) grid.size()][i%(int) grid.size()] == 0 ||
-                    grid[j/(int) grid.size()][j%(int) grid.size()] == 0) {
+            int ix = X(i);
+            int iy = Y(i);
+
+            if (grid[ix][iy] == 0) {
+                continue;
+            }
+
+            for (int j = i + 1; j < grid.size() * grid.size(); ++j) {
+
+                int jx = X(j);
+                int jy = Y(j);
+
+
+                if (grid[jx][jy] == 0 || find(i) == find(j) ) {
                     continue;
                 }
-                if (find(i) != find(j)) {
-                    res = min(abs(i / (int)grid.size() - j / (int)grid.size() -1 + i % (int)grid.size() + j % (int)grid.size() - 1), res);
 
 
-                }
+                res = min(abs(ix - jx) + abs(iy - jy) - 1, res);
             }
         }
 
