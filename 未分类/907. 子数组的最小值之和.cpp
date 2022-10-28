@@ -32,6 +32,8 @@ public:
         iota(fa.begin(), fa.end(), 0);
         iota(l.begin(), l.end(), 0);
         iota(r.begin(), r.end(), 0);
+
+        // 下面这个操作没看懂啊, p不都是0吗, 还排个锤子序?
         sort(p.begin(), p.end(), [&](int i, int j) {
             return arr[i] > arr[j];
         });
@@ -51,13 +53,21 @@ public:
         };
         int ans = 0;
         for (auto i: p) {
-            if (i + 1 < n && vis[i + 1]) merge(i, i + 1);
-            if (i && vis[i - 1]) merge(i, i - 1);
-            vis[i] = 1;
-            auto f = get(i);
-            ans = (ans +
-                   1ll * (i - l[f] + 1) * (r[f] - i + 1) % mod * arr[i] % mod) %
-                  mod;
+
+            if (i + 1 < n && vis[i + 1])
+                merge(i, i + 1);
+
+            if (i && vis[i - 1])
+                merge(i, i - 1);
+
+            vis[i] = 1;     // 标记为已访问
+
+            auto f = get(i);    // 获取 i 所在的根节点
+
+            // 计算当前数字的贡献
+            auto contribution = 1ll * (i - l[f] + 1) * (r[f] - i + 1) % mod * arr[i] % mod;
+
+            ans = (ans + contribution) % mod;
         }
         return ans;
     }
