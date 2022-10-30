@@ -28,12 +28,12 @@ public:
     int sumSubarrayMins(vector<int> &arr) {
         int n = arr.size();
         vector<int> p(n), fa(n), l(n), r(n), vis(n);
-        iota(p.begin(), p.end(), 0);
-        iota(fa.begin(), fa.end(), 0);
-        iota(l.begin(), l.end(), 0);
-        iota(r.begin(), r.end(), 0);
+        iota(p.begin(), p.end(), 0);    // 0 ~ n-1
+        iota(fa.begin(), fa.end(), 0);  // 0 ~ n-1
+        iota(l.begin(), l.end(), 0);    // 0 ~ n-1
+        iota(r.begin(), r.end(), 0);    // 0 ~ n-1
 
-        // 下面这个操作没看懂啊, p不都是0吗, 还排个锤子序?
+        // 这一步相当于是对 arr 中的数据进行了排序, 并且将结果记录在了 p 中
         sort(p.begin(), p.end(), [&](int i, int j) {
             return arr[i] > arr[j];
         });
@@ -52,7 +52,7 @@ public:
             }
         };
         int ans = 0;
-        for (auto i: p) {
+        for (auto i: p) {       // i 是 arr 中从小到大排序的数字的序号
 
             if (i + 1 < n && vis[i + 1])
                 merge(i, i + 1);
@@ -78,6 +78,10 @@ int main() {
 
     Solution solution;
 
+    vector<int> n = {3, 1, 4, 5};
+
+
+    solution.sumSubarrayMins(n);
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/
 
