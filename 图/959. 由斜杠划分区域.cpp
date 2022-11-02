@@ -17,109 +17,127 @@
 
 using namespace std;
 
-#define X(i) (i / n)
-#define Y(i) (i % n)
-#define IDX(x, y) ((x) * n + (y))
 
+#define IDX(m) (4 * i + j + (m))
+#define MAXN 4000
 
 class Solution {
 public:
 
+    vector<int> fa;
 
-    void dfs(int start, int node, vector<vector<int>>& graph, int& res, vector<bool>&visited) {
+    int row;
+    int col;
+    int n;
 
+    int count;
 
+    Solution() : fa(vector<int>(MAXN)) {
 
-        if (start == node) {
-            ++res;
+    }
+
+    void mergeUpDownBlock() {
+
+        int x = 4 * (row * n + col) + 2;
+        int y = 4 * ((row + 1) * n + col) + 0;
+
+        merge(x, y);
+    }
+
+    void mergeLeftRightBlock() {
+        int x = 4 * (row * n + col) + 1;
+        int y = 4 * (row * n + (col + 1)) + 3;
+
+        merge(x, y);
+    }
+
+    void mergeSameBlock(int x, int y) {
+        x = 4 * (row * n + col) + x;
+        y = 4 * (row * n + col) + y;
+
+        merge(x, y);
+    }
+
+    void merge(int x, int y) {
+        int fx = find(x);
+        int fy = find(y);
+
+        if (fx == fy) {
             return;
         }
 
-        if (visited[node]) {
-            return;
-        }
+        fa[fx] = fy;
 
-        visited[node] = true;
+        --count;
+    }
 
-        for (auto& nei : graph[node]) {
-            dfs(start, nei, graph, res, visited);
+    int find(int x) {
+
+        if (x == fa[x]) {
+            return x;
+        } else {
+            fa[x] = find(fa[x]);
+            return fa[x];
         }
     }
 
 
-
-    int regionsBySlashes(vector<string> &grid) {
-
-        int n = grid.size() + 1;    // 每条边上的点数
-
-        vector<vector<int>> graph(n*n);
-
-        cout << "xxxx " << endl;
-
-        // 四周的边
-        for (int i = 0; i < n - 1; ++i) {
-            graph[IDX(i, 0)].push_back(IDX(i + 1, 0));
-            cout << "yy" << endl;
-
-            graph[IDX(n - 1, i)].push_back(IDX(n - 1, i + 1));
-            cout << "yy" << endl;
-
-            graph[IDX(n - i - 1, n - 1)].push_back(IDX(n - i - 2, n - 1));
-            cout << "yy" << endl;
-
-            graph[IDX(0, n - i-1)].push_back(IDX(0, n - i - 2));
-            cout << "zz" << endl;
+    int regionsBySlashes(vector<string>& grid) {
 
 
-            graph[IDX(i + 1, 0)].push_back(IDX(i, 0));
-            cout << "zz" << endl;
+        iota(fa.begin(), fa.end(), 0);
 
-            graph[IDX(n - 1, i + 1)].push_back(IDX(n - 1, i));
-            cout << "zz" << endl;
+        n = grid.size();
+        int subTriangleNum = 4 * n * n;
+        count = subTriangleNum;
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
 
-            cout << IDX(n - i - 2, n - 1) << endl;
-            graph[IDX(n - i - 2, n - 1)].push_back(IDX(n - i -1, n - 1));
-            cout << "zz" << endl;
 
-            graph[IDX(0, n - i - 2)].push_back(IDX(0, n - i-1));
-        }
+                this->row = i;
+                this->col = j;
 
-        cout << "vvvvvvvvvvv " << endl;
 
-        // 每个格子里的边
-        for (int i = 0; i < n-1; ++i) {
-            for (int j = 0; j < n-1; ++j) {
-                if (grid[i][j] == '/') {
-                    graph[IDX(i + 1, j)].push_back(IDX(i, j + 1));
-                    graph[IDX(i, j + 1)].push_back(IDX(i + 1, j));
-                } else if (grid[i][j] == '\\') {
-                    graph[IDX(i, j)].push_back(IDX(i + 1, j + 1));
-                    graph[IDX(i + 1, j + 1)].push_back(IDX(i, j));
+                char currChar = grid[i][j];
+                if (currChar == '/') {
+                    mergeSameBlock(0, 3);
+                    mergeSameBlock(1, 2);
+                } else if (currChar == '\\') {
+                    mergeSameBlock(0, 1);
+                    mergeSameBlock(2, 3);
+                } else {
+                    mergeSameBlock(0, 1);
+                    mergeSameBlock(1, 2);
+                    mergeSameBlock(2, 3);
+                    mergeSameBlock(3, 0);
+                }
+
+                if (i < n - 1) {
+                    mergeUpDownBlock();
+                }
+
+                if (j < n - 1) {
+                    mergeLeftRightBlock();
                 }
             }
         }
 
-        // 下面就是求无向图中的环的个数的常规操作了, DFS
 
-        vector<bool> visited(n, false);
-
-        int res = 0;
-        for (int i = 0; i < n*n; i++) {
-            for (int j = 0; j < graph[i].size(); ++j) {
-                dfs(i, j, graph, res, visited);
-            }
-        }
-
-
-        return res >> 1;
+        return count;
     }
 };
+
+
 
 
 int main() {
 
 
     Solution solution;
+
+    vector<string> grid ={" /","/ "};
+
+    solution.regionsBySlashes(grid);
 
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/
