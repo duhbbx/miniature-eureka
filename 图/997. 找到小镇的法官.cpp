@@ -49,19 +49,22 @@ class Solution {
 public:
     int findJudge(int n, vector<vector<int>>& trust) {
 
-        int person = trust[0][0];
-        int judge = trust[0][1];
+        vector<int> indegree(n + 1, 0);
+        vector<int> outdegree(n + 1, 0);
 
-        for (int i = 1; i < trust.size(); ++i) {
-            if (trust[i][0] == judge) {
-                return -1;
-            } else if (trust[i][1] != judge) {
-                return -1;
+        for (auto& t : trust) {
+            ++indegree[t[1]];
+            ++outdegree[t[0]];
+        }
+
+        for (int i = 1; i <= n; ++i) {
+            if (indegree[i] == n - 1 && outdegree[i] == 0) {
+                return i;
             }
         }
 
+        return -1;
 
-        return judge;
     }
 };
 

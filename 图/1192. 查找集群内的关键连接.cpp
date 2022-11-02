@@ -1,7 +1,6 @@
 //
-// Created by tuhooo on 2022/11/2.
+// Created by duhbb on 2022/11/2.
 //
-
 #include <iostream>              // 输入输出
 #include <vector>                // 可变长度数组
 #include <unordered_map>         // hashmap
@@ -52,38 +51,62 @@ public:
         }
         fa[fx] = fy;
     }
+
+    void reset(int x) {
+        fa[x] = x;
+    }
 };
 
 
 class Solution {
 public:
-    bool equationsPossible(vector<string>& equations) {
+    vector<vector<int>> criticalConnections(int n, vector<vector<int>>& connections) {
 
-        UnionSet usForEqual(26);
+        UnionSet us(n);
 
+        vector<vector<int>> graph(n);
 
-        for (string& e : equations) {
-            if (e[1] == '=') {
-                usForEqual.merge(e[0] - 'a', e[3] - 'a');
-            }
+        vector<vector<int>> res;
+
+        for (auto& c : connections) {
+            us.merge(c[0], c[1]);
+            graph[c[0]].push_back(c[1]);
+            graph[c[1]].push_back(c[0]);
         }
 
+        for (auto& c : connections) {
 
-        for (string& e : equations) {
-            if (e[1] == '!') {
-                if(usForEqual.find(e[0] - 'a') == usForEqual.find(e[3] - 'a')) {
-                    return false;
+            if (graph[c[0]].size() == 1 || graph[c[1]].size() == 1) {
+                res.push_back(c);
+                continue;
+            }
+
+            us.reset(c[0]);
+            us.reset(c[1]);
+
+            for (auto nei : graph[c[0]]) {
+                if (nei != c[1]) {
+                    us.merge(nei, c[0]);
+                    break;
                 }
             }
+
+            for (auto nei : graph[c[1]]) {
+                if (nei != c[0]) {
+                    us.merge(nei, c[1]);
+                    break;
+                }
+            }
+
+            if (us.find(c[0]) != us.find(c[1])) {
+                
+            }
+
+
+
         }
-
-        return true;
-
     }
 };
-
-
-
 
 
 int main() {
