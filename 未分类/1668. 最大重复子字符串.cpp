@@ -1,6 +1,7 @@
 //
-// Created by duhbb on 2022/11/2.
+// Created by tuhooo on 2022/11/3.
 //
+
 #include <iostream>              // 输入输出
 #include <vector>                // 可变长度数组
 #include <unordered_map>         // hashmap
@@ -21,40 +22,28 @@
 using namespace std;
 
 
-using G=vector<vector<pair<int, int>>>;
 
 
 class Solution {
 public:
-
-    void dfs(int node, G& g, vector<int>& path) {
-
+    int maxRepeating(string sequence, string word) {
 
 
+        string sub = word;
+        int res = 0;
 
-
-    }
-
-
-    vector<vector<int>> criticalConnections(int n, vector<vector<int>>& connections) {
-
-        vector<vector<pair<int, int>>> graph(n);
-
-        for (auto& c : connections) {
-            graph[c[0]].emplace_back(c[1], 0);
-            graph[c[1]].emplace_back(c[0], 0);
+        while(sequence.find(word) != sequence.npos) {
+            ++res;
+            sub.append(word);
         }
 
-
-
-        vector<int> path;
-
-
-
-
-
+        return res;
     }
 };
+
+
+
+
 
 
 int main() {
