@@ -27,7 +27,6 @@ private:
     const int maxn = 100000;
 
     vector<int> dfn = vector<int>(maxn);                    // 节点访问的顺序
-    vector<int> low = vector<int>(maxn);                    // 用于回溯
     vector<vector<int>> graph = vector<vector<int>>(maxn);  // 邻接列表
     int start = 0;
     vector<vector<int>> bridge = vector<vector<int>>();
@@ -36,28 +35,30 @@ private:
 public:
 
 
-    void tarjan(int curr, int prev) {
+    int tarjan(int curr, int prev) {
 
-        // 设置当前节点的 dfn 和 low
-        dfn[curr] = low[curr] = ++start;
+        int currLow = ++start;
+        dfn[curr] = currLow;
 
         // 遍历邻居节点
         for(int nei : graph[curr]) {
             // nei 还没有访问, dfn 所有元素的默认值都是 0, 所以 !dfn[nei] 为真说明 nei 还没访问过
             if (!dfn[nei]) {
                 // nei还没访问过的话,就以nei为根节点继续找
-                tarjan(nei, curr);
+                int neiLow = tarjan(nei, curr);
                 // 计算 curr 的追溯值
-                low[curr] = min(low[curr], low[nei]);
+                currLow = min(currLow, neiLow);
                 // 出现这种请情况表示从curr可以到nei,但是nei永远回不去curr了
-                if (low[nei] > dfn[curr]) {
+                if (neiLow > dfn[curr]) {
                     bridge.push_back({curr, nei});
                 }
             } else if (nei != prev) {
                 // 此时nei是已经访问过的,从nei开始回溯
-                low[curr] = min(low[curr], dfn[nei]);
+                currLow = min(currLow, dfn[nei]);
             }
         }
+
+        return currLow;
     }
 
 
@@ -73,10 +74,7 @@ public:
             graph[c[1]].push_back(c[0]);
         }
 
-        for (int i = 0; i < n; ++i) {
-            tarjan(i, -1);
-        }
-
+        tarjan(0, -1);
         return bridge;
     }
 };
