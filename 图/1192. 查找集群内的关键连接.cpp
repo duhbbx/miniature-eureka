@@ -25,34 +25,58 @@ using G=vector<vector<pair<int, int>>>;
 
 
 class Solution {
+
+private:
+    const int maxn = 100;
+
+    vector<int> dfn = vector<int>(maxn);                    // 节点访问的顺序
+    vector<int> low = vector<int>(maxn);                    // 用于回溯
+    vector<vector<int>> graph = vector<vector<int>>(maxn);  // 邻接列表
+    int start = 0;
+    vector<vector<int>> bridge = vector<vector<int>>();
+
+
 public:
 
-    void dfs(int node, G& g, vector<int>& path) {
+
+    void tarjan(int curr, int prev) {
+
+        // 设置当前节点的 dfn 和 low
+
+        // 遍历邻居节点
+        for(int nei : graph[curr]) {
+            if (!dfn[nei]) { // nei 还没有访问
+                tarjan(nei, curr);
+                low[curr] = min(low[curr], low[nei]);
+                if (low[nei] > dfn[curr]) {
+
+                }
 
 
+            } else if (nei != prev) {
+                // 此时 nei 是已经访问过的
+                low[curr] = min(low[curr], dfn[nei]);
 
-
-
+            }
+        }
     }
+
 
 
     vector<vector<int>> criticalConnections(int n, vector<vector<int>>& connections) {
 
-        vector<vector<pair<int, int>>> graph(n);
+        // 初始化 start
+        start = 0;
 
-        for (auto& c : connections) {
-            graph[c[0]].emplace_back(c[1], 0);
-            graph[c[1]].emplace_back(c[0], 0);
+        // 构造邻接列表
+
+
+        for (int i = 0; i < n; ++i) {
+            tarjan(i, -1);
         }
 
 
-
-        vector<int> path;
-
-
-
-
-
+        return bridge;
     }
 };
 
