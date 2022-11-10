@@ -13,139 +13,87 @@
 #include <numeric>
 #include <map>
 #include <cstring>
-#include <format>
 
 
 using namespace std;
 
 
-struct Path {
-    vector<pair<int, int>> p;
-    vector<int> keys;
-    int founded;
-};
-
-
 class Solution {
 public:
-
-    int shortestPathAllKeys(vector<string> &grid) {
-        queue<Path> queue1;   //BFS的队列
-        int m = grid.size();                    //网格的行数
-        int n = grid[0].size();                 //网格的列数
-        int totalKeys = 0;                      //总的钥匙有多少把
-
-        //遍历网格,获取起始点的坐标,以及钥匙的数量
+    int shortestPathAllKeys(vector<string>& grid) {
+        int m = grid.size(), n = grid[0].size();    // 网格的列数和行数
+        int sx = 0, sy = 0;                         // 起始位置
+        unordered_map<char, int> key_to_idx;        // 对钥匙编号
         for (int i = 0; i < m; ++i) {
             for (int j = 0; j < n; ++j) {
                 if (grid[i][j] == '@') {
-                    vector<pair<int, int>> path = vector<pair<int, int>>();
-                    path.push_back(make_pair(i, j));
-                    Path p;
-                    p.p = path;
-                    p.keys = vector<int>(26, 0);
-                    p.founded = 0;
-                    queue1.push(p);
-                }
-                if ('a' <= grid[i][j] && grid[i][j] <= 'z') {
-                    ++totalKeys;        //更新钥匙的数量
+                    sx = i;
+                    sy = j;
+                } else if (islower(grid[i][j])) {
+                    if (!key_to_idx.count(grid[i][j])) {
+                        int idx = key_to_idx.size();
+                        key_to_idx[grid[i][j]] = idx;
+                    }
                 }
             }
         }
-        while (!queue1.empty()) {
 
-            cout << "xxxx" << endl;
-            int len = queue1.size();
-            for (int i = 0; i < len; ++i) {
-                auto cur = queue1.front();  //获取当前的路径
-                queue1.pop();               //弹出
-
-                int x = cur.p.back().first;   //当前路径的当前位置坐标的行分量
-                int y = cur.p.back().second;  //当前路径的当前位置坐标的列分量
-
-                //当前点可走的四个方向:上,下,左,右
-                vector<pair<int, int>> directions = {{-1, 0},
-                                                     {1,  0},
-                                                     {0,  -1},
-                                                     {0,  1}};
-
-                for (auto &d: directions) {
-                    int x_next = x + d.first;
-                    int y_next = y + d.second;
-                    //如果当前点不在网格范围内则跳过
-                    if (!(x_next >= 0 && x_next < m && y_next >= 0 &&
-                          y_next < n)) {
-                        continue;
-                    }
-
-                    // 如果下一个房间有钥匙收着
-                    if ('a' <= grid[x_next][y_next] &&
-                        grid[x_next][y_next] <= 'z') {
-
-                        if (cur.keys[grid[x_next][y_next] - 'a'] == 0) {
-                            cur.keys[grid[x_next][y_next] - 'a'] = 1;
-                            ++cur.founded;
-                            if (cur.founded == totalKeys) {
-                                return cur.p.size();
-                            }
+        queue<tuple<int, int, int>> q;
+        vector<vector<vector<int>>> dist(m, vector<vector<int>>(n, vector<int>(1 << key_to_idx.size(), -1)));
+        q.emplace(sx, sy, 0);       // 入口位置入列,目前有0个钥匙
+        dist[sx][sy][0] = 0;
+        while (!q.empty()) {
+            auto [x, y, mask] = q.front();
+            q.pop();
+            for (int i = 0; i < 4; ++i) {
+                int nx = x + dirs[i][0];
+                int ny = y + dirs[i][1];
+                if (nx >= 0 && nx < m && ny >= 0 && ny < n && grid[nx][ny] != '#') {
+                    if (grid[nx][ny] == '.' || grid[nx][ny] == '@') {
+                        if (dist[nx][ny][mask] == -1) {
+                            dist[nx][ny][mask] = dist[x][y][mask] + 1;
+                            q.emplace(nx, ny, mask);
                         }
-                        Path np;
-                        np = cur;
-                        np.p.emplace_back(x_next, y_next);   // 当前路径加上这个点
-                        queue1.push(np);           // 新的路径入列
-                    } else if ('A' <= grid[x_next][y_next] &&
-                               grid[x_next][y_next] <= 'Z') {    // 遇上的是一个锁
-                        if (cur.keys[grid[x_next][y_next] - 'A'] ==
-                            1) {                    // 如果锁可以打开这个
-                            Path np;
-                            np = cur;
-                            np.p.emplace_back(x_next, y_next);   // 当前路径加上这个点
-                            queue1.push(np);           // 新的路径入列
-                        }
-                        // 否则这条路就废了, 啥也不干了
-                    } else if (grid[x_next][y_next] == '.') {
-                        if (cur.p.size() >= 2) {
-                            int x_last = cur.p[cur.p.size() - 2].first;
-                            int y_last = cur.p[cur.p.size() - 2].second;
-                            if (x_last == x_next && y_last == y_next &&
-                                grid[x_last][y_last] == '.') {
-                                continue;
-                            } else {
-                                Path np;
-                                np = cur;
-                                np.p.emplace_back(x_next,
-                                                  y_next);   // 当前路径加上这个点
-                                queue1.push(
-                                        np);           // 新的路径入列           // 这个路径还要给其他的点用
+                    } else if (islower(grid[nx][ny])) {
+                        int idx = key_to_idx[grid[nx][ny]];     // 获取钥匙的编号
+                        if (dist[nx][ny][mask | (1 << idx)] == -1) {
+                            dist[nx][ny][mask | (1 << idx)] = dist[x][y][mask] + 1;
+
+                            // 找到了所有的钥匙
+                            if ((mask | (1 << idx)) == (1 << key_to_idx.size()) - 1) {
+                                return dist[nx][ny][mask | (1 << idx)];
                             }
-                        } else {
-                            Path np;
-                            np = cur;
-                            np.p.emplace_back(x_next, y_next);   // 当前路径加上这个点
-                            queue1.push(np);           // 新的路径入列
+                            q.emplace(nx, ny, mask | (1 << idx));
+                        }
+                    } else {
+                        int idx = key_to_idx[tolower(grid[nx][ny])];
+                        if ((mask & (1 << idx)) && dist[nx][ny][mask] == -1) {
+                            dist[nx][ny][mask] = dist[x][y][mask] + 1;
+                            q.emplace(nx, ny, mask);
                         }
                     }
                 }
             }
-
         }
-
         return -1;
-
     }
+
+private:
+    static constexpr int dirs[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 };
 
 
-    int main() {
+int main() {
 
-        vector<string> grid = {"@...a",".###A","b.BCc"};
+    // vector<string> grid = {"@...a", ".###A", "b.BCc"};
+    vector<string> grid = {"@abcdeABCDEFf"};
 
-        Solution solution;
+    Solution solution;
 
-        solution.shortestPathAllKeys(grid);
+    solution.shortestPathAllKeys(grid);
 
 
-        /*print<vector<int>>({ 1, 2, 3, 4 });*/
+    /*print<vector<int>>({ 1, 2, 3, 4 });*/
 
-        return 0;
-    }
+    return 0;
+}
