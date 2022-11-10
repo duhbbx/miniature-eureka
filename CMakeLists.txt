@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.22)
 project(leetcode)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 # add_definitions(-DUNICODE -D_UNICODE)    #使用UNICODE字符集
 
@@ -22,3 +22,4 @@ add_executable("4925ce689d41475fb21419615ba9490d" "前缀和/303. 区域和检�
 add_executable("015e8afd4ce2425b863530d9c842737f" "前缀和/363. 矩形区域不超过 K 的最大数值和.cpp")
 add_executable("1abf928998bd4d9a8906af3820836bec" "前缀和/764. 最大加号标志.cpp")
 add_executable("14ceb9719fe34d12b81011e6ba294847" "前缀和/497. 非重叠矩形中的随机点.cpp")
+add_executable("300d58ab48ef4c31934289fd575e6230" "图/864. 获取所有钥匙的最短路径.cpp")
