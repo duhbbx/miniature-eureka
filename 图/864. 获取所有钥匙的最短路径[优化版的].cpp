@@ -41,8 +41,7 @@ private:
     int R;
     int C;
 
-    unordered_map<char, int> nextDistance(char source,  unordered_map<char, int>& char2loc, vector<string>& grid)
-    {
+    unordered_map<char, int> nextDistance(char source,  unordered_map<char, int>& char2loc, vector<string>& grid) {
         int r = char2loc[source] / 100;
         int c = char2loc[source] % 100;
 
@@ -62,27 +61,22 @@ private:
         seen[r][c] = true;
 
         int steps = 0;
-        while (!q.empty())
-        {
-            for (int i = q.size(); i > 0; --i)
-            {
+        while (!q.empty()) {
+            for (int i = q.size(); i > 0; --i) {
                 r = q.front().first;
                 c = q.front().second;
                 q.pop();
 
-                if (grid[r][c] != source && grid[r][c] != '.')
-                {
+                if (grid[r][c] != source && grid[r][c] != '.') {
                     distances[grid[r][c]] = steps;
                     // 关键实现：一旦找到则不再往前
                     continue;
                 }
 
-                for (int j = 0; j < 4; ++j)
-                {
+                for (int j = 0; j < 4; ++j) {
                     int nextR = r + directions[j];
                     int nextC = c + directions[j+1];
-                    if (nextR >= 0 && nextR < R && nextC >= 0 && nextC < C && !seen[nextR][nextC] && grid[nextR][nextC] != '#')
-                    {
+                    if (nextR >= 0 && nextR < R && nextC >= 0 && nextC < C && !seen[nextR][nextC] && grid[nextR][nextC] != '#') {
                         seen[nextR][nextC] = true;
                         q.push({nextR, nextC});
                     }
@@ -106,13 +100,10 @@ public:
 
         // 用一个int来表示二维坐标，这里最大是30，所以用100已经足够
         unordered_map<char, int> char2loc;
-        for (int r = 0; r < R; ++r)
-        {
-            for (int c = 0; c < C; ++c)
-            {
+        for (int r = 0; r < R; ++r) {
+            for (int c = 0; c < C; ++c) {
                 char curr = grid[r][c];
-                if (curr != '.' && curr != '#')
-                {
+                if (curr != '.' && curr != '#') {
                     char2loc[curr] = r*100 + c;
                 }
             }
@@ -120,8 +111,7 @@ public:
 
         // 距离的关系映射
         unordered_map<char, unordered_map<char, int>> distances;
-        for (auto iter = char2loc.begin(); iter != char2loc.end(); ++iter)
-        {
+        for (auto iter = char2loc.begin(); iter != char2loc.end(); ++iter) {
             distances[iter->first] = nextDistance(iter->first, char2loc, grid);
         }
 
@@ -138,15 +128,13 @@ public:
         priority_queue<Node> q;
         q.emplace(Node(0, '@', 0));
 
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             Node node = q.top();
             q.pop();
             int nodeDist = node.dist;
 
             // 找到目标直接返回当前距离，就是最小距离
-            if (node.state == target)
-            {
+            if (node.state == target) {
                 return nodeDist;
             }
 
@@ -154,19 +142,14 @@ public:
             auto& nexts = distances[node.curr];
             // cout << "==============" << endl;
             // cout << "curr " << node.curr << " state " << node.state << endl;
-            for (auto iter = nexts.begin(); iter != nexts.end(); ++iter)
-            {
+            for (auto iter = nexts.begin(); iter != nexts.end(); ++iter) {
                 int d2 = iter->second;
                 int s2 = node.state;
-                if (iter->first >= 'a' && iter->first <= 'z')
-                {
+                if (iter->first >= 'a' && iter->first <= 'z') {
                     s2 |= (1 << (iter->first - 'a'));
-                }
+                } else if (iter->first >= 'A' && iter->first <= 'Z') {
                     // 对于锁的情况，则需要有钥匙，否则忽略
-                else if (iter->first >= 'A' && iter->first <= 'Z')
-                {
-                    if ((s2  & (1 << (iter->first - 'A'))) == 0)
-                    {
+                    if ((s2  & (1 << (iter->first - 'A'))) == 0) {
                         continue;
                     }
                 }
@@ -174,8 +157,7 @@ public:
                 // 只有距离更小的情况才需要插入到 优先队列里
                 int currState = iter->first * 256 + s2;
                 // 关键实现：这里条件是小于，等于也要忽略，否则会循环
-                if ((destMap.find(currState) == destMap.end()) ||  (nodeDist + d2 < destMap[currState]))
-                {
+                if ((destMap.find(currState) == destMap.end()) ||  (nodeDist + d2 < destMap[currState])) {
                     // cout << "add next " << iter->first << " with " << nodeDist+d2 << endl;
                     destMap[currState] = nodeDist + d2;
                     q.emplace(Node{nodeDist + d2, iter->first, s2});
