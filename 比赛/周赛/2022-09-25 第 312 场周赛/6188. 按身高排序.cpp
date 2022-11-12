@@ -10,8 +10,8 @@
 #include <climits>               // 极限值
 #include <algorithm>             // 算法相关的
 #include <set>                   // 集合
-#include "../../0000 API 模板 类/TreeNode.h"
-#include "../../0000 API 模板 类/ListNode.h"
+#include "../../../0000 API 模板 类/TreeNode.h"
+#include "../../../0000 API 模板 类/ListNode.h"
 
 
 using namespace std;
@@ -41,14 +41,28 @@ void print(T t) {
 
 class Solution {
 public:
-    vector<int> goodIndices(vector<int>& nums, int k) {
 
+        static bool compare(int a, int b) {
+            return a > b;
+        }
+    vector<string> sortPeople(vector<string>& names, vector<int>& heights) {
 
+        unordered_map<int, string> m;
 
+        for (int i = 0; i < names.size(); ++i) {
+            m.emplace(heights[i], names[i]);
+        }
 
-        return {};
+        sort(heights.begin(), heights.end(), compare);
+
+        for (int i = 0; i < heights.size(); ++i) {
+            names[i] = m[heights[i]];
+        }
+
+        return names;
     }
 };
+
 
 ////////////////////////////////////////////////////////////////////////////////
 

@@ -1,9 +1,6 @@
 //
 // Created by duhbb on 2022/9/17.
 //
-//
-// Created by duhbb on 2022/9/17.
-//
 #include <iostream>              // 输入输出
 #include <vector>                // 可变长度数组
 #include <unordered_map>         // hashmap
@@ -13,8 +10,8 @@
 #include <climits>               // 极限值
 #include <algorithm>             // 算法相关的
 #include <set>                   // 集合
-#include "../../0000 API 模板 类/TreeNode.h"
-#include "../../0000 API 模板 类/ListNode.h"
+#include "../../../0000 API 模板 类/TreeNode.h"
+#include "../../../0000 API 模板 类/ListNode.h"
 
 
 using namespace std;
@@ -42,43 +39,45 @@ void print(T t) {
 ////////////////////////////////////////////////////////////////////////////////
 /// 这里放OJ的类
 
-/*
-
- [4,7,9]
-[8,2,5,8]
-[1,1,1]
-[10]
- */
 
 class Solution {
 public:
-    int matchPlayersAndTrainers(vector<int>& players, vector<int>& trainers) {
-
-        sort(players.begin(), players.end());
-        sort(trainers.begin(), trainers.end());
-
-        int sum = 0;
-
-        int j = 0;
-        for (int i= 0; i < players.size(); ++i) {
+    int longestSubarray(vector<int>& nums) {
 
 
-            while(j < trainers.size()) {
-                if (players[i] <= trainers[j++]) {
-                    ++sum;
-                    break;
+        if (nums.size() == 1) return 1;
+
+        int max = -1;
+        int res = -1;
+
+        int p = 0, q = 1;
+
+        while(q < nums.size()) {
+            if (nums[q] == nums[p]) {
+                ++q;
+            } else {
+                if (nums[p] > max) {
+                    max = nums[p];
+                    res = q - p;
+                } else if (nums[p] == max && q - p > res) {
+                    res = q - p;
                 }
-            }
-
-            if (j == trainers.size()) {
-                break;
+                p = q;
+                ++q;
             }
         }
 
+        if (nums[p] > max) {
+            return q - p;
+        } else if (nums[p] == max && q - p > res) {
+            return q - p;
+        }
 
-        return sum;
+
+        return res;
     }
 };
+
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -101,7 +100,10 @@ int main() {
 
     Solution solution;
 
-    cout << solution.countDaysTogether("08-15", "08-18","08-16", "08-19" ) << endl;
+    vector<int> nums = {96317,96317,96317,96317,96317,96317,96317,96317,96317,279979};
+  auto o = solution.longestSubarray(nums);
+
+ cout << o << endl;
 
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/

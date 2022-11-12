@@ -1,7 +1,9 @@
 //
-// Created by duhbb on 2022/9/18.
+// Created by duhbb on 2022/9/17.
 //
-
+//
+// Created by duhbb on 2022/9/17.
+//
 #include <iostream>              // 输入输出
 #include <vector>                // 可变长度数组
 #include <unordered_map>         // hashmap
@@ -11,8 +13,8 @@
 #include <climits>               // 极限值
 #include <algorithm>             // 算法相关的
 #include <set>                   // 集合
-#include "../../0000 API 模板 类/TreeNode.h"
-#include "../../0000 API 模板 类/ListNode.h"
+#include "../../../0000 API 模板 类/TreeNode.h"
+#include "../../../0000 API 模板 类/ListNode.h"
 
 
 using namespace std;
@@ -40,59 +42,68 @@ void print(T t) {
 ////////////////////////////////////////////////////////////////////////////////
 /// 这里放OJ的类
 
-/*
-[2,3,5,8,13,21,34]
-[7,13,11]
-[0,1,2,0,0,0,0,1,1,1,1,2,2,2,2]
 
- */
 class Solution {
 public:
-    TreeNode* reverseOddLevels(TreeNode* root) {
+
+    vector<int> countBits(int n) {
+        vector<int> bits(30, 0);
+        int i = 0;
+        while (n > 0) {
+            bits[i++] = n & 1;
+            n >>= 1;
+        }
+
+        return bits;
+    }
+
+    void add(vector<int> &bitCount, int n) {
+
+        vector<int> single = countBits(n);
+        for (int i = 0; i < 30; i++) {
+            bitCount[i] += single[i];
+        }
+    }
+
+    void minus(vector<int> &bitCount,  int n) {
+        vector<int> single = countBits(n);
+        for (int i = 0; i < 30; i++) {
+            bitCount[i] -= single[i];
+        }
+    }
+
+    vector<int> smallestSubarrays(vector<int> &nums) {
+
+
+        vector<int> bitCount(30, 0);
+
+        int max = 0;
+        for (auto i : nums) {
+            max |= i;
+        }
+
+        vector<int> maxBits = countBits(max);
 
 
 
+        int p = 0;
+        int q = 0;
 
-        vector<TreeNode*> q;
 
-        q.push_back(root);
-
-        int level = 0;
-        while(!q.empty()) {
-
-            int n = q.size();
-            for (int i = 0; i < n; i++) {
-                if (q.front()->left) {
-                    q.push_back(q.front()->left);
-                }
-
-                if (q.front()->right) {
-                    q.push_back(q.front()->right);
-                }
-
-                q.erase(q.begin());
-            }
-
-            ++level;
-
-            if (level % 2 == 1) {
-                int i = 0, j = q.size() - 1;
-                while(i < j) {
-                    int tmp = q[i]->val;
-                    q[i]->val = q[j]->val;
-                    q[j]->val = tmp;
-                    ++i;
-                    --j;
-                }
-            }
+        int cur = 0;
+        while(q < nums.size()) {
+            cur |= nums[q];
         }
 
 
-        return root;
+
+
+
+
+
+        return {};
     }
 };
-
-
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -114,16 +125,6 @@ int main() {
 
 
     Solution solution;
-
-    TreeNode* root = new TreeNode(7);
-    TreeNode* left = new TreeNode(13);
-    TreeNode* right = new TreeNode(11);
-
-    root->left = left;
-    root->right = right;
-
-    solution.reverseOddLevels(root);
-
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/
 

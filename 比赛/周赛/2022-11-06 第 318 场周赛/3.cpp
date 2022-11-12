@@ -1,9 +1,6 @@
 //
 // Created by duhbb on 2022/9/17.
 //
-//
-// Created by duhbb on 2022/9/17.
-//
 #include <iostream>              // 输入输出
 #include <vector>                // 可变长度数组
 #include <unordered_map>         // hashmap
@@ -13,8 +10,8 @@
 #include <climits>               // 极限值
 #include <algorithm>             // 算法相关的
 #include <set>                   // 集合
-#include "../../0000 API 模板 类/TreeNode.h"
-#include "../../0000 API 模板 类/ListNode.h"
+#include "../../../0000 API 模板 类/TreeNode.h"
+#include "../../../0000 API 模板 类/ListNode.h"
 
 
 using namespace std;
@@ -45,64 +42,39 @@ void print(T t) {
 
 class Solution {
 public:
+    int xorAllNums(vector<int>& nums1, vector<int>& nums2) {
+        int a = nums1[0];
+        int b = nums2[0];
 
-    vector<int> countBits(int n) {
-        vector<int> bits(30, 0);
-        int i = 0;
-        while (n > 0) {
-            bits[i++] = n & 1;
-            n >>= 1;
+        if (nums1.size() % 2 == 0 && nums2.size() % 2 == 0) {
+            return 0;
         }
 
-        return bits;
+        for (int i = 1; i < nums1.size(); ++i) {
+            a ^= nums1[i];
+        }
+
+        for (int i = 1; i < nums2.size(); ++i) {
+            b ^= nums2[i];
+        }
+
+        if (nums1.size() % 2 == 0 && nums2.size() % 2 == 1) {
+            return a;
+        }
+
+        if (nums1.size() % 2 == 1 && nums2.size() % 2 == 0) {
+            return b;
+        }
+
+
+
+        return a ^ b;
+
+
+
+
     }
 
-    void add(vector<int> &bitCount, int n) {
-
-        vector<int> single = countBits(n);
-        for (int i = 0; i < 30; i++) {
-            bitCount[i] += single[i];
-        }
-    }
-
-    void minus(vector<int> &bitCount,  int n) {
-        vector<int> single = countBits(n);
-        for (int i = 0; i < 30; i++) {
-            bitCount[i] -= single[i];
-        }
-    }
-
-    vector<int> smallestSubarrays(vector<int> &nums) {
-
-
-        vector<int> bitCount(30, 0);
-
-        int max = 0;
-        for (auto i : nums) {
-            max |= i;
-        }
-
-        vector<int> maxBits = countBits(max);
-
-
-
-        int p = 0;
-        int q = 0;
-
-
-        int cur = 0;
-        while(q < nums.size()) {
-            cur |= nums[q];
-        }
-
-
-
-
-
-
-
-        return {};
-    }
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -125,6 +97,12 @@ int main() {
 
 
     Solution solution;
+
+    vector<int> nums = {96317,96317,96317,96317,96317,96317,96317,96317,96317,279979};
+  auto o = solution.longestSubarray(nums);
+
+ cout << o << endl;
+
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/
 

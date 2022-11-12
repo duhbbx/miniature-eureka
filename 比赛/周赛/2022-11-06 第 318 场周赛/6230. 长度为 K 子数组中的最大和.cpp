@@ -1,7 +1,6 @@
 //
-// Created by duhbb on 2022/9/18.
+// Created by duhbb on 2022/9/17.
 //
-
 #include <iostream>              // 输入输出
 #include <vector>                // 可变长度数组
 #include <unordered_map>         // hashmap
@@ -11,8 +10,8 @@
 #include <climits>               // 极限值
 #include <algorithm>             // 算法相关的
 #include <set>                   // 集合
-#include "../../0000 API 模板 类/TreeNode.h"
-#include "../../0000 API 模板 类/ListNode.h"
+#include "../../../0000 API 模板 类/TreeNode.h"
+#include "../../../0000 API 模板 类/ListNode.h"
 
 
 using namespace std;
@@ -42,25 +41,52 @@ void print(T t) {
 
 class Solution {
 public:
-    int longestContinuousSubstring(string s) {
+    long long maximumSubarraySum(vector<int> &nums, int k) {
 
 
-        int res = 1;
+        long long res = 0;
 
-        int p = 0, q = 0;
+        int n = nums.size();
+        vector<long long> prefixSum(n+1, 0);
 
-        while(q <= s.length()) {
+        for (int i = 1; i < n+1; ++i) {
+            prefixSum[i] = nums[i-1] + prefixSum[i-1];
+        }
 
-            if (q == s.length() || s[q+1] - s[q] != 1) {
-                res = max(res, q - p + 1);
-                p = q + 1;
+        unordered_map<int, int> map1;
+
+
+        int least = 0;
+        for (int i = 0; i < n; ++i) {
+            if (map1.find(nums[i]) != map1.end()) {
+                int r = map1.find(nums[i])->second;
+                for (int j = least; j <= r; ++j) {
+                    map1.erase(nums[j]);
+                }
+                map1.emplace(nums[i], i);
+                least = r + 1;
+            } else {
+                map1.emplace(nums[i], i);
             }
-            q++;
+
+            if (map1.size() == k) {
+                res = max(res, prefixSum[i+1] - prefixSum[least]);
+
+                map1.erase(nums[least]);
+                ++least;
+            }
         }
 
         return res;
     }
 };
+
+/**
+ * Your LUPrefix object will be instantiated and called as such:
+ * LUPrefix* obj = new LUPrefix(n);
+ * obj->upload(video);
+ * int param_2 = obj->longest();
+ */
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -83,7 +109,8 @@ int main() {
 
     Solution solution;
 
-    cout << solution.countDaysTogether("08-15", "08-18","08-16", "08-19" ) << endl;
+    vector<int> nums = {1,5,4,2,9,9,9};
+    solution.maximumSubarraySum(nums, 3);
 
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/

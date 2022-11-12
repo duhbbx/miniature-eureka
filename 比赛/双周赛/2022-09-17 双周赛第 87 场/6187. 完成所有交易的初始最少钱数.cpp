@@ -1,6 +1,12 @@
 //
 // Created by duhbb on 2022/9/17.
 //
+//
+// Created by duhbb on 2022/9/17.
+//
+//
+// Created by duhbb on 2022/9/17.
+//
 #include <iostream>              // 输入输出
 #include <vector>                // 可变长度数组
 #include <unordered_map>         // hashmap
@@ -10,9 +16,8 @@
 #include <climits>               // 极限值
 #include <algorithm>             // 算法相关的
 #include <set>                   // 集合
-#include <cstring>
-#include "../../0000 API 模板 类/TreeNode.h"
-#include "../../0000 API 模板 类/ListNode.h"
+#include "../../../0000 API 模板 类/TreeNode.h"
+#include "../../../0000 API 模板 类/ListNode.h"
 
 
 using namespace std;
@@ -40,46 +45,49 @@ void print(T t) {
 ////////////////////////////////////////////////////////////////////////////////
 /// 这里放OJ的类
 
+/*
+ *
+ * [[2,1],[5,0],[4,2]]
+[[3,0],[0,3]]
+ *
+ *
+ */
+
+bool compare(vector<int> & a, vector<int>& b) {
+
+    return a[1] < b[1];
+}
+
 class Solution {
 public:
-    vector<int> applyOperations(vector<int>& nums) {
 
-        int n = nums.size();
-        for (int i = 0; i < n - 1; ++i) {
-            if (nums[i] == nums[i+1]) {
-                nums[i] *= 2;
-                nums[i+1] = 0;
-            }
-        }
 
-//        print(nums);
 
-        for (int i = 0; i < n;) {
-            if (nums[i] != 0) {
-                ++i;
-                continue;
-            }
-            int j = i + 1;
-            for (; j < n;) {
-                if (nums[j] != 0) {
-                    break;
-                } else {
-                    ++j;
-                }
-            }
+    long long minimumMoney(vector<vector<int>>& transactions) {
 
-            if (j >= n) {
-                break;
+        sort(transactions.begin(), transactions.end(), compare);
+
+
+        long long max = 0;
+        long long remain = 0;
+
+        for (auto& i : transactions) {
+
+            if (remain == 0) {
+                max += i[0];
+                remain += i[1];
+            } else if (remain <= i[0]) {
+                max += i[0] - remain;
+                remain = i[1];
             } else {
-                swap(nums[i], nums[j]);
-                ++i;
+                remain -= i[0] - i[1];
             }
         }
 
-        return nums;
+
+        return max;
     }
 };
-
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -100,10 +108,10 @@ int main() {
     printCurrentFileName();
 
 
+    vector<vector<int>> nums = {{2,1},{5,0},{4,2}};
     Solution solution;
 
-    vector<int> nums = {1,2,2,1,1,0};
-    solution.applyOperations(nums);
+    solution.minimumMoney(nums);
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/
 

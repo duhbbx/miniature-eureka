@@ -1,6 +1,7 @@
 //
-// Created by duhbb on 2022/9/17.
+// Created by duhbb on 2022/9/18.
 //
+
 #include <iostream>              // 输入输出
 #include <vector>                // 可变长度数组
 #include <unordered_map>         // hashmap
@@ -10,9 +11,8 @@
 #include <climits>               // 极限值
 #include <algorithm>             // 算法相关的
 #include <set>                   // 集合
-#include <cstring>
-#include "../../0000 API 模板 类/TreeNode.h"
-#include "../../0000 API 模板 类/ListNode.h"
+#include "../../../0000 API 模板 类/TreeNode.h"
+#include "../../../0000 API 模板 类/ListNode.h"
 
 
 using namespace std;
@@ -40,43 +40,15 @@ void print(T t) {
 ////////////////////////////////////////////////////////////////////////////////
 /// 这里放OJ的类
 
+
 class Solution {
 public:
-    bool equalFrequency(string word) {
+    int smallestEvenMultiple(int n) {
 
-        int a[26];
-        memset(a, 0, sizeof(a));
+        return n % 2 == 0 ? n : n * 2;
 
-        for (auto& c : word) {
-            ++a[c - 'a'];
-        }
-
-        for (int i = 0; i < 26; ++i) {
-            if (a[i] == 0) {
-                continue;
-            }
-
-            a[i]--;
-
-            int aa = 0, bb = 0, sum = 0;
-            for (int j = 0; j < 26; ++j) {
-                if (a[j] != 0) {
-                    aa = max(a[j], aa);
-                    bb++;
-                }
-                sum += a[j];
-            }
-
-            if (aa == 0 || sum / bb == aa) {
-                return true;
-            }
-            a[i]++;
-        }
-
-        return false;
     }
 };
-
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -98,7 +70,8 @@ int main() {
 
 
     Solution solution;
-    solution.equalFrequency("abbcc");
+
+    cout << solution.countDaysTogether("08-15", "08-18","08-16", "08-19" ) << endl;
 
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/

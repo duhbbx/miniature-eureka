@@ -10,8 +10,8 @@
 #include <climits>               // 极限值
 #include <algorithm>             // 算法相关的
 #include <set>                   // 集合
-#include "../../0000 API 模板 类/TreeNode.h"
-#include "../../0000 API 模板 类/ListNode.h"
+#include "../../../0000 API 模板 类/TreeNode.h"
+#include "../../../0000 API 模板 类/ListNode.h"
 
 
 using namespace std;
@@ -38,35 +38,17 @@ void print(T t) {
 
 ////////////////////////////////////////////////////////////////////////////////
 /// 这里放OJ的类
-class LUPrefix {
+
+class Solution {
 public:
+    vector<int> goodIndices(vector<int>& nums, int k) {
 
-        vector<int> *p;
-int q = 0;
-    LUPrefix(int n) {
-        p = new vector(n, 0);
-    }
 
-    void upload(int video) {
-        (*p)[video - 1] = 1;
-        while(q < p->size()) {
-            if (p->at(q) != 0) ++q;
-            else
-                break;
-        }
-    }
 
-    int longest() {
-        return q;
+
+        return {};
     }
 };
-
-/**
- * Your LUPrefix object will be instantiated and called as such:
- * LUPrefix* obj = new LUPrefix(n);
- * obj->upload(video);
- * int param_2 = obj->longest();
- */
 
 ////////////////////////////////////////////////////////////////////////////////
 

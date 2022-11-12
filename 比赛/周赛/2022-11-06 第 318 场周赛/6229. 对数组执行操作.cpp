@@ -10,8 +10,9 @@
 #include <climits>               // 极限值
 #include <algorithm>             // 算法相关的
 #include <set>                   // 集合
-#include "../../0000 API 模板 类/TreeNode.h"
-#include "../../0000 API 模板 类/ListNode.h"
+#include <cstring>
+#include "../../../0000 API 模板 类/TreeNode.h"
+#include "../../../0000 API 模板 类/ListNode.h"
 
 
 using namespace std;
@@ -39,43 +40,46 @@ void print(T t) {
 ////////////////////////////////////////////////////////////////////////////////
 /// 这里放OJ的类
 
-
 class Solution {
 public:
-    int xorAllNums(vector<int>& nums1, vector<int>& nums2) {
-        int a = nums1[0];
-        int b = nums2[0];
+    vector<int> applyOperations(vector<int>& nums) {
 
-        if (nums1.size() % 2 == 0 && nums2.size() % 2 == 0) {
-            return 0;
+        int n = nums.size();
+        for (int i = 0; i < n - 1; ++i) {
+            if (nums[i] == nums[i+1]) {
+                nums[i] *= 2;
+                nums[i+1] = 0;
+            }
         }
 
-        for (int i = 1; i < nums1.size(); ++i) {
-            a ^= nums1[i];
+//        print(nums);
+
+        for (int i = 0; i < n;) {
+            if (nums[i] != 0) {
+                ++i;
+                continue;
+            }
+            int j = i + 1;
+            for (; j < n;) {
+                if (nums[j] != 0) {
+                    break;
+                } else {
+                    ++j;
+                }
+            }
+
+            if (j >= n) {
+                break;
+            } else {
+                swap(nums[i], nums[j]);
+                ++i;
+            }
         }
 
-        for (int i = 1; i < nums2.size(); ++i) {
-            b ^= nums2[i];
-        }
-
-        if (nums1.size() % 2 == 0 && nums2.size() % 2 == 1) {
-            return a;
-        }
-
-        if (nums1.size() % 2 == 1 && nums2.size() % 2 == 0) {
-            return b;
-        }
-
-
-
-        return a ^ b;
-
-
-
-
+        return nums;
     }
-
 };
+
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -98,11 +102,8 @@ int main() {
 
     Solution solution;
 
-    vector<int> nums = {96317,96317,96317,96317,96317,96317,96317,96317,96317,279979};
-  auto o = solution.longestSubarray(nums);
-
- cout << o << endl;
-
+    vector<int> nums = {1,2,2,1,1,0};
+    solution.applyOperations(nums);
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/
 

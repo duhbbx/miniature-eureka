@@ -1,7 +1,6 @@
 //
-// Created by duhbb on 2022/9/18.
+// Created by duhbb on 2022/9/17.
 //
-
 #include <iostream>              // 输入输出
 #include <vector>                // 可变长度数组
 #include <unordered_map>         // hashmap
@@ -11,8 +10,8 @@
 #include <climits>               // 极限值
 #include <algorithm>             // 算法相关的
 #include <set>                   // 集合
-#include "../../0000 API 模板 类/TreeNode.h"
-#include "../../0000 API 模板 类/ListNode.h"
+#include "../../../0000 API 模板 类/TreeNode.h"
+#include "../../../0000 API 模板 类/ListNode.h"
 
 
 using namespace std;
@@ -43,11 +42,39 @@ void print(T t) {
 
 class Solution {
 public:
-    int smallestEvenMultiple(int n) {
+    int xorAllNums(vector<int>& nums1, vector<int>& nums2) {
+        int a = nums1[0];
+        int b = nums2[0];
 
-        return n % 2 == 0 ? n : n * 2;
+        if (nums1.size() % 2 == 0 && nums2.size() % 2 == 0) {
+            return 0;
+        }
+
+        for (int i = 1; i < nums1.size(); ++i) {
+            a ^= nums1[i];
+        }
+
+        for (int i = 1; i < nums2.size(); ++i) {
+            b ^= nums2[i];
+        }
+
+        if (nums1.size() % 2 == 0 && nums2.size() % 2 == 1) {
+            return a;
+        }
+
+        if (nums1.size() % 2 == 1 && nums2.size() % 2 == 0) {
+            return b;
+        }
+
+
+
+        return a ^ b;
+
+
+
 
     }
+
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -71,7 +98,10 @@ int main() {
 
     Solution solution;
 
-    cout << solution.countDaysTogether("08-15", "08-18","08-16", "08-19" ) << endl;
+    vector<int> nums = {96317,96317,96317,96317,96317,96317,96317,96317,96317,279979};
+  auto o = solution.longestSubarray(nums);
+
+ cout << o << endl;
 
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/

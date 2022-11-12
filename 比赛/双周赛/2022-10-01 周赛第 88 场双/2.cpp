@@ -10,8 +10,8 @@
 #include <climits>               // 极限值
 #include <algorithm>             // 算法相关的
 #include <set>                   // 集合
-#include "../../0000 API 模板 类/TreeNode.h"
-#include "../../0000 API 模板 类/ListNode.h"
+#include "../../../0000 API 模板 类/TreeNode.h"
+#include "../../../0000 API 模板 类/ListNode.h"
 
 
 using namespace std;
@@ -38,41 +38,35 @@ void print(T t) {
 
 ////////////////////////////////////////////////////////////////////////////////
 /// 这里放OJ的类
-
-class Solution {
+class LUPrefix {
 public:
 
-    int toIndex(string &s) {
-        vector<int> month2Day = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-        int month = stoi(s.substr(0, 2));
-        int day = stoi(s.substr(3, 2));
-        int sum = 0;
-
-        for (int i = 1; i < month; ++i) {
-            sum += month2Day[i - 1];
-        }
-        return sum + day;
+        vector<int> *p;
+int q = 0;
+    LUPrefix(int n) {
+        p = new vector(n, 0);
     }
 
-    int countDaysTogether(string arriveAlice, string leaveAlice, string arriveBob, string leaveBob) {
-
-        int arriveAliceInt = toIndex(arriveAlice);
-        int leaveAliceInt = toIndex(leaveAlice);
-        int arriveBobInt = toIndex(arriveBob);
-        int leaveBobInt = toIndex(leaveBob);
-
-
-        if (leaveAliceInt < arriveBobInt || leaveBobInt < arriveAliceInt) {
-            return 0;
+    void upload(int video) {
+        (*p)[video - 1] = 1;
+        while(q < p->size()) {
+            if (p->at(q) != 0) ++q;
+            else
+                break;
         }
+    }
 
-
-        return min(leaveAliceInt, leaveBobInt) - max(arriveAliceInt, arriveBobInt) + 1;
-
-
+    int longest() {
+        return q;
     }
 };
 
+/**
+ * Your LUPrefix object will be instantiated and called as such:
+ * LUPrefix* obj = new LUPrefix(n);
+ * obj->upload(video);
+ * int param_2 = obj->longest();
+ */
 
 ////////////////////////////////////////////////////////////////////////////////
 

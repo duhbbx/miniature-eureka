@@ -1,6 +1,7 @@
 //
-// Created by duhbb on 2022/9/17.
+// Created by duhbb on 2022/9/18.
 //
+
 #include <iostream>              // 输入输出
 #include <vector>                // 可变长度数组
 #include <unordered_map>         // hashmap
@@ -10,8 +11,8 @@
 #include <climits>               // 极限值
 #include <algorithm>             // 算法相关的
 #include <set>                   // 集合
-#include "../../0000 API 模板 类/TreeNode.h"
-#include "../../0000 API 模板 类/ListNode.h"
+#include "../../../0000 API 模板 类/TreeNode.h"
+#include "../../../0000 API 模板 类/ListNode.h"
 
 
 using namespace std;
@@ -41,38 +42,25 @@ void print(T t) {
 
 class Solution {
 public:
-
-    int toIndex(string &s) {
-        vector<int> month2Day = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-        int month = stoi(s.substr(0, 2));
-        int day = stoi(s.substr(3, 2));
-        int sum = 0;
-
-        for (int i = 1; i < month; ++i) {
-            sum += month2Day[i - 1];
-        }
-        return sum + day;
-    }
-
-    int countDaysTogether(string arriveAlice, string leaveAlice, string arriveBob, string leaveBob) {
-
-        int arriveAliceInt = toIndex(arriveAlice);
-        int leaveAliceInt = toIndex(leaveAlice);
-        int arriveBobInt = toIndex(arriveBob);
-        int leaveBobInt = toIndex(leaveBob);
+    int longestContinuousSubstring(string s) {
 
 
-        if (leaveAliceInt < arriveBobInt || leaveBobInt < arriveAliceInt) {
-            return 0;
+        int res = 1;
+
+        int p = 0, q = 0;
+
+        while(q <= s.length()) {
+
+            if (q == s.length() || s[q+1] - s[q] != 1) {
+                res = max(res, q - p + 1);
+                p = q + 1;
+            }
+            q++;
         }
 
-
-        return min(leaveAliceInt, leaveBobInt) - max(arriveAliceInt, arriveBobInt) + 1;
-
-
+        return res;
     }
 };
-
 
 ////////////////////////////////////////////////////////////////////////////////
 

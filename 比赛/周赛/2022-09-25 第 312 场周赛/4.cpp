@@ -1,3 +1,6 @@
+//
+// Created by duhbb on 2022/9/17.
+//
 #include <iostream>              // 输入输出
 #include <vector>                // 可变长度数组
 #include <unordered_map>         // hashmap
@@ -7,8 +10,8 @@
 #include <climits>               // 极限值
 #include <algorithm>             // 算法相关的
 #include <set>                   // 集合
-#include "../../0000 API 模板 类/TreeNode.h"
-#include "../../0000 API 模板 类/ListNode.h"
+#include "../../../0000 API 模板 类/TreeNode.h"
+#include "../../../0000 API 模板 类/ListNode.h"
 
 
 using namespace std;
@@ -36,65 +39,37 @@ void print(T t) {
 ////////////////////////////////////////////////////////////////////////////////
 /// 这里放OJ的类
 
-
-
-class MyTreeNode {
-public:
-    unordered_map<char, MyTreeNode*> v;
-
-    char c;
-
-    int n;
-};
-
-
 class Solution {
 public:
 
-    int get(MyTreeNode* root, string& s) {
-
+    int toIndex(string &s) {
+        vector<int> month2Day = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        int month = stoi(s.substr(0, 2));
+        int day = stoi(s.substr(3, 2));
         int sum = 0;
-        MyTreeNode* cur = root;
-        for (int k = 0; k < s.length(); k++) {
-            cur = cur->v[s[k]];
-            sum += cur->n;
-        }
 
-        return sum;
+        for (int i = 1; i < month; ++i) {
+            sum += month2Day[i - 1];
+        }
+        return sum + day;
     }
 
-    vector<int> sumPrefixScores(vector<string> &words) {
+    int countDaysTogether(string arriveAlice, string leaveAlice, string arriveBob, string leaveBob) {
 
-        MyTreeNode* root = new MyTreeNode;
+        int arriveAliceInt = toIndex(arriveAlice);
+        int leaveAliceInt = toIndex(leaveAlice);
+        int arriveBobInt = toIndex(arriveBob);
+        int leaveBobInt = toIndex(leaveBob);
 
-        MyTreeNode* cur = root;
 
-        for (string& s : words) {
-            for (char c : s) {
-                if (cur->v.find(c) == cur->v.end()) {
-                    cur->v[c] = new MyTreeNode;
-                    cur->v[c]->n = 1;
-                    cur = cur->v[c];
-                } else {
-                    cur->v[c]->n++;
-                    cur = cur->v[c];
-                }
-            }
-
-            cur = root;
+        if (leaveAliceInt < arriveBobInt || leaveBobInt < arriveAliceInt) {
+            return 0;
         }
 
 
-        vector<int> res;
-        for (string& s : words) {
-
-            int sum = get(root, s);
-
-            res.push_back(sum);
-        }
+        return min(leaveAliceInt, leaveBobInt) - max(arriveAliceInt, arriveBobInt) + 1;
 
 
-        return res;
     }
 };
 
@@ -120,10 +95,7 @@ int main() {
 
     Solution solution;
 
-
-    vector<string> v = {"abcd"};
-
-    solution.sumPrefixScores(v);
+    cout << solution.countDaysTogether("08-15", "08-18","08-16", "08-19" ) << endl;
 
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/

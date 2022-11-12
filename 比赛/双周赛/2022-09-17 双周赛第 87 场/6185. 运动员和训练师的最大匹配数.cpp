@@ -1,6 +1,9 @@
 //
 // Created by duhbb on 2022/9/17.
 //
+//
+// Created by duhbb on 2022/9/17.
+//
 #include <iostream>              // 输入输出
 #include <vector>                // 可变长度数组
 #include <unordered_map>         // hashmap
@@ -10,8 +13,8 @@
 #include <climits>               // 极限值
 #include <algorithm>             // 算法相关的
 #include <set>                   // 集合
-#include "../../0000 API 模板 类/TreeNode.h"
-#include "../../0000 API 模板 类/ListNode.h"
+#include "../../../0000 API 模板 类/TreeNode.h"
+#include "../../../0000 API 模板 类/ListNode.h"
 
 
 using namespace std;
@@ -39,30 +42,43 @@ void print(T t) {
 ////////////////////////////////////////////////////////////////////////////////
 /// 这里放OJ的类
 
+/*
+
+ [4,7,9]
+[8,2,5,8]
+[1,1,1]
+[10]
+ */
+
 class Solution {
 public:
+    int matchPlayersAndTrainers(vector<int>& players, vector<int>& trainers) {
 
-        static bool compare(int a, int b) {
-            return a > b;
+        sort(players.begin(), players.end());
+        sort(trainers.begin(), trainers.end());
+
+        int sum = 0;
+
+        int j = 0;
+        for (int i= 0; i < players.size(); ++i) {
+
+
+            while(j < trainers.size()) {
+                if (players[i] <= trainers[j++]) {
+                    ++sum;
+                    break;
+                }
+            }
+
+            if (j == trainers.size()) {
+                break;
+            }
         }
-    vector<string> sortPeople(vector<string>& names, vector<int>& heights) {
 
-        unordered_map<int, string> m;
 
-        for (int i = 0; i < names.size(); ++i) {
-            m.emplace(heights[i], names[i]);
-        }
-
-        sort(heights.begin(), heights.end(), compare);
-
-        for (int i = 0; i < heights.size(); ++i) {
-            names[i] = m[heights[i]];
-        }
-
-        return names;
+        return sum;
     }
 };
-
 
 ////////////////////////////////////////////////////////////////////////////////
 

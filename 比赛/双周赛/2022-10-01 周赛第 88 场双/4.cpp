@@ -10,8 +10,8 @@
 #include <climits>               // 极限值
 #include <algorithm>             // 算法相关的
 #include <set>                   // 集合
-#include "../../0000 API 模板 类/TreeNode.h"
-#include "../../0000 API 模板 类/ListNode.h"
+#include "../../../0000 API 模板 类/TreeNode.h"
+#include "../../../0000 API 模板 类/ListNode.h"
 
 
 using namespace std;
@@ -39,45 +39,16 @@ void print(T t) {
 ////////////////////////////////////////////////////////////////////////////////
 /// 这里放OJ的类
 
-
 class Solution {
 public:
-    int longestSubarray(vector<int>& nums) {
+    vector<int> goodIndices(vector<int>& nums, int k) {
 
 
-        if (nums.size() == 1) return 1;
-
-        int max = -1;
-        int res = -1;
-
-        int p = 0, q = 1;
-
-        while(q < nums.size()) {
-            if (nums[q] == nums[p]) {
-                ++q;
-            } else {
-                if (nums[p] > max) {
-                    max = nums[p];
-                    res = q - p;
-                } else if (nums[p] == max && q - p > res) {
-                    res = q - p;
-                }
-                p = q;
-                ++q;
-            }
-        }
-
-        if (nums[p] > max) {
-            return q - p;
-        } else if (nums[p] == max && q - p > res) {
-            return q - p;
-        }
 
 
-        return res;
+        return {};
     }
 };
-
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -100,10 +71,7 @@ int main() {
 
     Solution solution;
 
-    vector<int> nums = {96317,96317,96317,96317,96317,96317,96317,96317,96317,279979};
-  auto o = solution.longestSubarray(nums);
-
- cout << o << endl;
+    cout << solution.countDaysTogether("08-15", "08-18","08-16", "08-19" ) << endl;
 
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/

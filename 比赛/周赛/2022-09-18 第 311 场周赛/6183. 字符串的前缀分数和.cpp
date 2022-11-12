@@ -1,6 +1,3 @@
-//
-// Created by duhbb on 2022/9/17.
-//
 #include <iostream>              // 输入输出
 #include <vector>                // 可变长度数组
 #include <unordered_map>         // hashmap
@@ -10,8 +7,8 @@
 #include <climits>               // 极限值
 #include <algorithm>             // 算法相关的
 #include <set>                   // 集合
-#include "../../0000 API 模板 类/TreeNode.h"
-#include "../../0000 API 模板 类/ListNode.h"
+#include "../../../0000 API 模板 类/TreeNode.h"
+#include "../../../0000 API 模板 类/ListNode.h"
 
 
 using namespace std;
@@ -39,54 +36,68 @@ void print(T t) {
 ////////////////////////////////////////////////////////////////////////////////
 /// 这里放OJ的类
 
+
+
+class MyTreeNode {
+public:
+    unordered_map<char, MyTreeNode*> v;
+
+    char c;
+
+    int n;
+};
+
+
 class Solution {
 public:
-    long long maximumSubarraySum(vector<int> &nums, int k) {
 
+    int get(MyTreeNode* root, string& s) {
 
-        long long res = 0;
-
-        int n = nums.size();
-        vector<long long> prefixSum(n+1, 0);
-
-        for (int i = 1; i < n+1; ++i) {
-            prefixSum[i] = nums[i-1] + prefixSum[i-1];
+        int sum = 0;
+        MyTreeNode* cur = root;
+        for (int k = 0; k < s.length(); k++) {
+            cur = cur->v[s[k]];
+            sum += cur->n;
         }
 
-        unordered_map<int, int> map1;
+        return sum;
+    }
 
+    vector<int> sumPrefixScores(vector<string> &words) {
 
-        int least = 0;
-        for (int i = 0; i < n; ++i) {
-            if (map1.find(nums[i]) != map1.end()) {
-                int r = map1.find(nums[i])->second;
-                for (int j = least; j <= r; ++j) {
-                    map1.erase(nums[j]);
+        MyTreeNode* root = new MyTreeNode;
+
+        MyTreeNode* cur = root;
+
+        for (string& s : words) {
+            for (char c : s) {
+                if (cur->v.find(c) == cur->v.end()) {
+                    cur->v[c] = new MyTreeNode;
+                    cur->v[c]->n = 1;
+                    cur = cur->v[c];
+                } else {
+                    cur->v[c]->n++;
+                    cur = cur->v[c];
                 }
-                map1.emplace(nums[i], i);
-                least = r + 1;
-            } else {
-                map1.emplace(nums[i], i);
             }
 
-            if (map1.size() == k) {
-                res = max(res, prefixSum[i+1] - prefixSum[least]);
-
-                map1.erase(nums[least]);
-                ++least;
-            }
+            cur = root;
         }
+
+
+        vector<int> res;
+        for (string& s : words) {
+
+            int sum = get(root, s);
+
+            res.push_back(sum);
+        }
+
 
         return res;
     }
 };
 
-/**
- * Your LUPrefix object will be instantiated and called as such:
- * LUPrefix* obj = new LUPrefix(n);
- * obj->upload(video);
- * int param_2 = obj->longest();
- */
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -109,8 +120,10 @@ int main() {
 
     Solution solution;
 
-    vector<int> nums = {1,5,4,2,9,9,9};
-    solution.maximumSubarraySum(nums, 3);
+
+    vector<string> v = {"abcd"};
+
+    solution.sumPrefixScores(v);
 
 
     /*print<vector<int>>({ 1, 2, 3, 4 });*/
