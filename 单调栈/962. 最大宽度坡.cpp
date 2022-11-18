@@ -1,9 +1,9 @@
 
-#include <iostream>                // ÊäÈëÊä³ö
-#include <vector>                // ¿É±ä³¤¶ÈÊı×é
+#include <iostream>                // è¾“å…¥è¾“å‡º
+#include <vector>                // å¯å˜é•¿åº¦æ•°ç»„
 #include <unordered_map>        // hashmap
-#include <stack>                // Õ»
-#include <string>                // ×Ö·û´®
+#include <stack>                // æ ˆ
+#include <string>                // å­—ç¬¦ä¸²
 
 using namespace std;
 
@@ -11,11 +11,11 @@ using namespace std;
 
 
 ////////////////////////////////////////////////////////////////////////////////
-/// ÕâÀï·ÅOJµÄÀà
+/// è¿™é‡Œæ”¾OJçš„ç±»
 
 
 /// <summary>
-/// ÕâÌâ°ÑÎÒ¿¨µÄËÀËÀµÄ£¬ÎÒÒÔÎªË¢ÁËÒ»¸öµ¥µ÷Õ»µÄ£¬¾Í¿ÉÒÔÁË£¬½á¹ûÕâ¸öã¶ÊÇ°ÑÎÒ¶¤ËÀÁË
+/// è¿™é¢˜æŠŠæˆ‘å¡çš„æ­»æ­»çš„ï¼Œæˆ‘ä»¥ä¸ºåˆ·äº†ä¸€ä¸ªå•è°ƒæ ˆçš„ï¼Œå°±å¯ä»¥äº†ï¼Œç»“æœè¿™ä¸ªæ„£æ˜¯æŠŠæˆ‘é’‰æ­»äº†
 /// </summary>
 class Solution {
 public:
@@ -29,17 +29,17 @@ public:
             return 0;
         }
 
-        // ½«Ë÷Òı 0 ÍÆÈëµ½Õ»ÖĞ
-        s.push(0);    // push 0 ÊÇ¼¸¸öÒâË¼?
+        // å°†ç´¢å¼• 0 æ¨å…¥åˆ°æ ˆä¸­
+        s.push(0);    // push 0 æ˜¯å‡ ä¸ªæ„æ€?
 
-        // ÒÔË÷Òı 0 ¿ªÊ¼Éú³ÉÒ»¸öÑÏ¸ñµ¥µ÷µÄÕ»
+        // ä»¥ç´¢å¼• 0 å¼€å§‹ç”Ÿæˆä¸€ä¸ªä¸¥æ ¼å•è°ƒçš„æ ˆ
         for (int i = 1; i < n; i++) {
             if (nums[s.top()] > nums[i]) {
                 s.push(i);
             }
         }
 
-        // µ¹×Å»ØÀ´ÔÙÀ´Ò»´Î
+        // å€’ç€å›æ¥å†æ¥ä¸€æ¬¡
         for (int i = n - 1; i > 0; i--) {
             while (!s.empty() && nums[s.top()] <= nums[i]) {
                 len = max(len, i - s.top());
@@ -66,7 +66,7 @@ public:
 
 
 /// <summary>
-/// Êä³öÈİÆ÷ÖĞµÄÄÚÈİ
+/// è¾“å‡ºå®¹å™¨ä¸­çš„å†…å®¹
 /// </summary>
 /// <typeparam name="T"></typeparam>
 /// <param name="t"></param>
