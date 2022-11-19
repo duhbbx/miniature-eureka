@@ -20,83 +20,49 @@ using namespace std;
 
 class Solution {
 public:
+
+    int s[100];
+
+    int subarraySum(int len, int t) {
+
+        unordered_map<int, int> m;
+        m[0] = 1;
+
+        int count = 0, pre = 0;
+
+        for (int i = 0; i < len; ++i) {
+            auto x = s[i];
+            pre += x;
+            if (m.find(pre - t) != m.end()) {
+                count += m[pre-t];
+            }
+            ++m[pre];
+        }
+
+        return count;
+    }
+
     int numSubmatrixSumTarget(vector<vector<int>>& matrix, int target) {
 
-
-        int m = matrix.size();
-        int n = matrix[0].size();
-
-        /*
-        vector<vector<int>> prefixSum(m * n + 1, vector<int>(m * n + 1, 0));
-
-
-
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                prefixSum[i+1][j+1] = prefixSum[i+1][j] + matrix[i][j];
-            }
-        }
-
-        for (int i = 0; i < m + 1; ++i) {
-            for (int j = 0; j < n + 1; ++j) {
-                cout << prefixSum[i][j] << ", ";
-            }
-            cout << endl;
-        }
-        cout << "===============================" << endl;
-
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j <= n; ++j) {
-                prefixSum[i+1][j] = prefixSum[i][j] + prefixSum[i+1][j];
-            }
-        }
-
-        for (int i = 0; i < m + 1; ++i) {
-            for (int j = 0; j < n + 1; ++j) {
-                cout << prefixSum[i][j] << ", ";
-            }
-            cout << endl;
-        }
-
-
-        */
-
-
-
-        vector<vector<int>> prefixSum(m + 1, vector<int>(n, 0));
-
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                prefixSum[i+1][j] = prefixSum[i][j] + matrix[i][j];
-            }
-        }
-
-
-        int res = 0;
-        for (int x1 = 0; x1 < m; ++x1) {
-            for (int y1 = 0; y1 < n; ++y1) {
-//                for (int x2 = x1; x2 < m; ++x2) {
-//                    for (int y2 = y1; y2 < n; ++y2) {
-//                        int sum = prefixSum[x2+1][y2+1] - prefixSum[x2+1][y1] - prefixSum[x1][y2+1] + prefixSum[x1][y1];
-//                        if (sum == target) {
-//                            ++res;
-//                        }
-//                    }
-//                }
-                for (int i = 0; i < n; ++i) {
-
-                    int sum = 0;
-                    for (int l = 0, r = 0; r < n; ++r) {
-                        sum +=
-                    }
-
-
+        auto& m = matrix;
+        int r = matrix.size();
+        int c = matrix[0].size();
+        auto& t = target;
+        int ans = 0;
+        for (int i = 0; i < r; ++i) {
+            memset(s, 0, sizeof(s));
+            for (int j = i; j < r; ++j) {
+                for (int k = 0; k < c; ++k) {
+                    s[k] += m[j][k];
                 }
 
+                ans += subarraySum(c, t);
             }
+
+
         }
 
-        return res;
+        return ans;
     }
 };
 
