@@ -66,3 +66,5 @@ add_executable("723f2b5a3d7f4cf3bbf3138098be9b19" "比赛/周赛/2022-11-13 第 
 add_executable("2cfbb90b1299496295ec52726474e262" "比赛/周赛/2022-11-13 第 320 场周赛/第2题.cpp")
 add_executable("5e6810ee57824f66bd42a84d2d84a866" "比赛/周赛/2022-11-13 第 320 场周赛/第3题.cpp")
 
+
+add_executable("e706104937e5479baab2dbce3a03d3b0" "main.cpp")
