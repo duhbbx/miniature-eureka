@@ -17,7 +17,7 @@ class Player {
   public:
     Player(const string &name, int score, int n) {
         this->name = name;
-        this->score += score;
+        this->score = score;
         if (this->score > 0) {
             this->score_vec.push_back({n, this->score});
         }
@@ -47,11 +47,26 @@ class Player {
     }
 };
 
+#define ENABLE_DEBUG
+
+using namespace std;
+
+#define __output(...) printf(__VA_ARGS__);
+
+#define __format(__fmt__) "%s(%d)-<%s>: " __fmt__ "\n"
+
+#ifdef ENABLE_DEBUG
+#define TRACE_ME(format, ...) printf("%s(%d)-<%s>: " format "\n", __FILE__, __LINE__, __FUNCTION__, ##__VA_ARGS__);
+#endif
+
+#ifndef ENABLE_DEBUG
+#define TRACE_ME(__fmt__, ...)
+#endif
+
 int main() {
 
     map<string, Player> p_map;
-
-    dbg("开始咯.....");
+    TRACE_ME("test");
 
     int n = 0;
     cin >> n;
@@ -86,13 +101,15 @@ int main() {
 
     tuple<string, int, int> curr = {"", 0, 0};
 
+    // dbg(p_map);
     for (const auto &e : p_map) {
+        dbg(e.first);
 
         if (e.second.score <= 0 || e.second.score < get<2>(curr)) {
+            dbg(e.second.score);
+            dbg(get<2>(curr));
             continue;
         }
-
-        dbg("............");
 
         if (e.second.score > get<2>(curr)) {
             curr = {e.first,
@@ -106,6 +123,7 @@ int main() {
         }
     }
 
+    dbg("a vector:", (std::vector<int>{2, 3, 4}));
     dbg("最终结果是: ", get<0>(curr).c_str());
 
     return 0;
