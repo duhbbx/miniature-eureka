@@ -1,48 +1,112 @@
-#include <iostream>              // 输入输出
-#include <vector>                // 可变长度数组
-#include <unordered_map>         // hashmap
-#include <unordered_set>         // 无序集合
-#include <stack>                 // 栈
-#include <string>                // 字符串
-#include <queue>                 // 队列
-#include <climits>               // 极限值
-#include <algorithm>             // 算法相关的
-#include <set>                   // 集合
-//#include "../0000 API 模板 类/TreeNode.h"
-//#include "../0000 API 模板 类/ListNode.h"
-#include <numeric>
-#include <map>
-#include <cstring>
 
+#include "dbg.h"
+#include <bits/stdc++.h>
+
+#ifdef DBG_MACRO_DISABLE
+#define dbg(...)
+#endif
 
 using namespace std;
 
+class Player {
+  public:
+    string name;
+    int score;
+    vector<pair<int, int>> score_vec;
 
-class Solution {
-public:
-    int finalValueAfterOperations(vector<string>& operations) {
-        int res = 0;
+  public:
+    Player(const string &name, int score, int n) {
+        this->name = name;
+        this->score += score;
+        if (this->score > 0) {
+            this->score_vec.push_back({n, this->score});
+        }
+    }
 
-        for (auto& o : operations) {
-            if (o[0] == '+' || o[2] == '+') {
-                ++res;
-            } else {
-                --res;
+    pair<int, int> get_first_score_n() const {
+
+        if (this->score <= 0) {
+            return {-1, 0};
+        }
+
+        if (this->score_vec.size() <= 0) {
+            return {-1, 0};
+        }
+
+        // Using a range-based for loop
+        for (const auto &p : this->score_vec) {
+            int n = p.first;
+            int s = p.second;
+
+            if (s == this->score) {
+                return {n, s};
             }
         }
 
-        return res;
+        return {-1, 0};
     }
 };
 
-
 int main() {
 
+    map<string, Player> p_map;
 
-    Solution solution;
+    dbg("开始咯.....");
 
+    int n = 0;
+    cin >> n;
 
-    /*print<vector<int>>({ 1, 2, 3, 4 });*/
+    cin.ignore(100, '\n');
+
+    for (int i = 1; i <= n; ++i) {
+        string name = "";
+        cin >> name;
+        int score = 0;
+        cin >> score;
+
+        dbg("读取到了名字: ", name, "分数: ", score);
+
+        // Find an element in the map by its key
+        std::map<string, Player>::iterator it = p_map.find(name);
+
+        // Check if the element was found
+        if (it == p_map.end()) {
+            dbg("没有找到了", name.c_str());
+            Player p = Player(name, score, i);
+            p_map.insert(make_pair(name, p));
+        } else {
+            dbg("已经存在了", name.c_str());
+
+            it->second.score += score;
+            if (it->second.score > 0) {
+                it->second.score_vec.push_back({i, it->second.score});
+            }
+        }
+    }
+
+    tuple<string, int, int> curr = {"", 0, 0};
+
+    for (const auto &e : p_map) {
+
+        if (e.second.score <= 0 || e.second.score < get<2>(curr)) {
+            continue;
+        }
+
+        dbg("............");
+
+        if (e.second.score > get<2>(curr)) {
+            curr = {e.first,
+                    e.second.get_first_score_n().first,
+                    e.second.score};
+        } else if (e.second.score == get<2>(curr)) {
+            int index = e.second.get_first_score_n().first;
+            if (index < get<1>(curr)) {
+                curr = {e.first, index, e.second.score};
+            }
+        }
+    }
+
+    dbg("最终结果是: ", get<0>(curr).c_str());
 
     return 0;
 }

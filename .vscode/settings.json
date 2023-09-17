@@ -6,6 +6,8 @@
     "C_Cpp.clang_format_sortIncludes": null,
     "C_Cpp.clang_format_style": "file",
     "files.associations": {
+        "*.grm": "yacc",
+        "*.lex": "yacc",
         "atomic": "cpp",
         "bit": "cpp",
         "cctype": "cpp",
@@ -64,7 +66,8 @@
         "cwctype": "cpp",
         "numbers": "cpp",
         "string_view": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "vector": "cpp"
     },
     "C_Cpp.clang_format_path": "C:\\\\LLVM\\\\bin\\\\clang-format.exe"
 }
