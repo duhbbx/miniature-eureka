@@ -37,12 +37,21 @@ struct TreeNode {
 class Solution {
 
   public:
+    map<TreeNode *, int> m;
     int rob(TreeNode *root) {
 
         return get(root);
     }
 
     int get(TreeNode *root) {
+
+        // 使用 find 函数查找键
+        std::map<TreeNode *, int>::iterator it = m.find(root);
+
+        // 检查是否找到了键
+        if (it != m.end()) {
+            return it->second;
+        }
 
         if (!root) {
             return 0;
@@ -63,7 +72,11 @@ class Solution {
         int delta2 = 0;
         delta2 = rob(root->left) + rob(root->right);
 
-        return max(delta1, delta2);
+        int a = max(delta1, delta2);
+
+        m.insert({root, a});
+
+        return a;
     }
 };
 
